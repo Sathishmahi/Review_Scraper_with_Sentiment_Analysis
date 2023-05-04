@@ -1,0 +1,1 @@
+from ReviewScraperwithSentimentAnalysis.config.configuration import Configuration

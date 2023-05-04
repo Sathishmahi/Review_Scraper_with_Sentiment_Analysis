@@ -1,0 +1,7 @@
+from ReviewScraperwithSentimentAnalysis.components.data_ingestion_single import ToExtractReviewsSingle
+from ReviewScraperwithSentimentAnalysis.components.text_preprocessing import TextPreprocessing
+
+t=TextPreprocessing()
+t.combine_all()
+
+

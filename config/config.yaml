@@ -1,0 +1,7 @@
+data_ingestion: 
+  root_dir: data_ingestion
+  file_name: review.csv
+
+text_preprocessing:
+  root_dir: text_preprocessing
+  processed_data_file_path: preprocess.csv

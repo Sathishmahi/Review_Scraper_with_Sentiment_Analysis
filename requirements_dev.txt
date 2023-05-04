@@ -1,0 +1,8 @@
+pytest
+bs4
+tensorflow
+streamlit
+nltk
+Pyyaml
+pandas
+-e .
