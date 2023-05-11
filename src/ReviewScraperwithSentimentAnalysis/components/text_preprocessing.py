@@ -35,7 +35,7 @@ class TextPreprocessing:
 
         return df
 
-    def combine_all(self,csv_path:Path=Path(self,DATA_SET_PATH)):
+    def combine_all(self,csv_path:Path=Path(DATA_SET_PATH)):
 
         processed_data_file_path=self.text_preprocessing_config.processed_data_file_path
         df=self.remove_unwanted_columns(csv_path)

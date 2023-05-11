@@ -1,7 +1,14 @@
 data_ingestion: 
   root_dir: data_ingestion
   file_name: review.csv
+  data_set_url: https://www.kaggle.com/datasets/niraliivaghani/flipkart-product-customer-reviews-dataset/download?datasetVersionNumber=1
 
 text_preprocessing:
   root_dir: text_preprocessing
   processed_data_file_path: preprocess.csv
+
+training:
+  root_dir: training
+  model_dir: trained_model
+  model_file_name: trained_model.h5
+   

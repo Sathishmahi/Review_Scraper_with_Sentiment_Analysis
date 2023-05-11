@@ -1,8 +1,14 @@
 import os
 from pathlib import Path
-from ReviewScraperwithSentimentAnalysis.constant import ARTIFACT_DIR_NAME,DataIngestionConstant,TextPreprocessingConstant
+from ReviewScraperwithSentimentAnalysis.constant import (PARAMS_FILE_PATH,
+                                                        ARTIFACT_DIR_NAME,
+                                                        DataIngestionConstant,
+                                                        TextPreprocessingConstant,
+                                                        TrainingConstant)
 from ReviewScraperwithSentimentAnalysis.utils import read_yaml,make_dirs
-from ReviewScraperwithSentimentAnalysis.entity import DataIngestionConfig,TextPreprocessingConfig
+from ReviewScraperwithSentimentAnalysis.entity import (DataIngestionConfig,
+                                                        TextPreprocessingConfig,
+                                                        TrainingConfig)
 
 
 
@@ -10,6 +16,7 @@ from ReviewScraperwithSentimentAnalysis.entity import DataIngestionConfig,TextPr
 class Configuration:
     def __init__(self):
         self.config_content=read_yaml()
+        self.params_content=read_yaml(yaml_file_path=PARAMS_FILE_PATH)
         self.artifact_dir_name=ARTIFACT_DIR_NAME
         make_dirs([self.artifact_dir_name])
 
@@ -36,3 +43,40 @@ class Configuration:
         
         text_preprocessing_config=TextPreprocessingConfig(root_dir, processed_data_file_path)
         return text_preprocessing_config
+
+    def get_training_config(self)->TrainingConfig:
+
+        training_config=self.config_content.get(TrainingConstant.TRAINING_ROOT_KEY)
+        
+        root_dir=os.path.join(self.artifact_dir_name,training_config.get(TrainingConstant.TRAINING_ROOT_DIR_KEY))
+        model_dir=os.path.join(root_dir,training_config.get(TrainingConstant.TRAINING_MODEL_DIR_KEY))
+        model_file_name=os.path.join(model_dir,training_config.get(TrainingConstant.TRAINING_MODEL_FILE_NAME_KEY))
+        data_path=self.get_text_preprocessing_config().processed_data_file_path
+        batch_size=self.params_content.get(TrainingConstant.TRAINING_BATCH_SIZE_KEY)
+        epochs=self.params_content.get(TrainingConstant.TRAINING_EPOCHS_KEY)
+        batch_size=self.params_content.get(TrainingConstant.TRAINING_BATCH_SIZE_KEY)
+        buffer_size=self.params_content.get(TrainingConstant.TRAINING_BUFFER_SIZE_KEY)
+        vocab_size=self.params_content.get(TrainingConstant.TRAINING_VOCAB_SIZE_KEY)
+        BiRnnUnits=self.params_content.get(TrainingConstant.TRAINING_BIRNN_UNITS_KEY)
+        eval_data_per=self.params_content.get(TrainingConstant.TRAINING_EVALUATION_DATA_PER_KEY)
+        embedding_dim=self.params_content.get(TrainingConstant.TRAINING_EMBEDDING_DIM_KEY)
+        no_classes=self.params_content.get(TrainingConstant.TRAINING_NO_CLASSES_KEY)
+        out_column_name=self.params_content.get(TrainingConstant.TRAINING_OUT_COLUMN_NAME_KEY)
+
+        training_config=TrainingConfig(
+             root_dir 
+            , model_dir
+            , model_file_name
+            , data_path
+            , epochs
+            , batch_size
+            , buffer_size
+            , vocab_size
+            , BiRnnUnits
+            , eval_data_per
+            , embedding_dim
+            , no_classes
+            , out_column_name
+            )
+        
+        return training_config
