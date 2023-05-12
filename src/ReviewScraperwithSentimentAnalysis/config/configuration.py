@@ -4,17 +4,19 @@ from ReviewScraperwithSentimentAnalysis.constant import (PARAMS_FILE_PATH,
                                                         ARTIFACT_DIR_NAME,
                                                         DataIngestionConstant,
                                                         TextPreprocessingConstant,
-                                                        TrainingConstant)
+                                                        TrainingConstant,
+                                                        PretrainedModelConstant)
 from ReviewScraperwithSentimentAnalysis.utils import read_yaml,make_dirs
 from ReviewScraperwithSentimentAnalysis.entity import (DataIngestionConfig,
                                                         TextPreprocessingConfig,
-                                                        TrainingConfig)
+                                                        TrainingConfig,PretrainedModelConfig)
 
 
 
 
 class Configuration:
     def __init__(self):
+        
         self.config_content=read_yaml()
         self.params_content=read_yaml(yaml_file_path=PARAMS_FILE_PATH)
         self.artifact_dir_name=ARTIFACT_DIR_NAME
@@ -44,6 +46,24 @@ class Configuration:
         text_preprocessing_config=TextPreprocessingConfig(root_dir, processed_data_file_path)
         return text_preprocessing_config
 
+
+    def get_pretrained_config(self)->PretrainedModelConfig:
+
+        pretrained_config=self.config_content.get(PretrainedModelConstant.PRETRAINED_ROOT_KEY)
+        print(pretrained_config)
+        root_dir=pretrained_config.get(PretrainedModelConstant.PRETRAINED_ROOT_DIR_KEY)
+        root_dir_path=os.path.join(self.artifact_dir_name,root_dir)
+
+        pretrained_model_dir=os.path.join(root_dir_path,pretrained_config.get(PretrainedModelConstant.PRETRAINED_MODEL_DIR_KEY))
+        pretrained_model_name=pretrained_config.get(PretrainedModelConstant.PRETRAINED_MODEL_NAME_KEY)
+
+        make_dirs(dirs_list=[root_dir_path,pretrained_model_dir])
+
+
+        pretrained_model_config=PretrainedModelConfig(pretrained_model_dir=pretrained_model_dir
+                                                    , pretrained_model_name=pretrained_model_name)
+
+        return pretrained_model_config
     def get_training_config(self)->TrainingConfig:
 
         training_config=self.config_content.get(TrainingConstant.TRAINING_ROOT_KEY)

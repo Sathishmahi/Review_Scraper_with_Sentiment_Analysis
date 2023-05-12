@@ -34,3 +34,9 @@ TrainingConfig=namedtuple("TrainingConfig",
                             "output_columns_name"
                         ]
                         )
+
+PretrainedModelConfig=namedtuple("PretrainedModelConfig", 
+                            [
+                                "pretrained_model_dir",
+                                "pretrained_model_name"
+                            ])

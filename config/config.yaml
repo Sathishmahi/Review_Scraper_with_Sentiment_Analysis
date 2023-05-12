@@ -11,4 +11,10 @@ training:
   root_dir: training
   model_dir: trained_model
   model_file_name: trained_model.h5
+
+
+pretrained_model:
+  root_dir: pretrained_model
+  hugging_face_transfromers_model_dir: hugging_face_model
+  pretrained_model_name: roberta-large-mnli
    

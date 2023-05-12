@@ -33,6 +33,15 @@ class TextPreprocessingConstant:
     TEXT_PREPROCESSING_PREPROCESSED_FILE_PATH_KEY:str="processed_data_file_path"
 
 
+
+@dataclass
+class PretrainedModelConstant:
+    PRETRAINED_ROOT_KEY:str="pretrained_model"
+    PRETRAINED_ROOT_DIR_KEY:str="root_dir"
+    PRETRAINED_MODEL_DIR_KEY:str="hugging_face_transfromers_model_dir"
+    PRETRAINED_MODEL_NAME_KEY:str="pretrained_model_name"
+
+
 @dataclass
 class TrainingConstant:
 

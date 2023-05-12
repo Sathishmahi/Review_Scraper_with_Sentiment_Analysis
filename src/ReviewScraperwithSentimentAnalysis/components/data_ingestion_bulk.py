@@ -7,9 +7,9 @@ import numpy as np
 
 
 class ToExtractReviewsBulk:
-  def __init__(self,product_name:str,Configuration=Configuration()):
+  def __init__(self,product_name:str,configuration=Configuration()):
 
-    self.data_ingestion_config=Configuration.get_data_ingestion_config()
+    self.data_ingestion_config=configuration.get_data_ingestion_config()
     searchString=product_name.replace(" ", "").replace("-", "")
     self.root_url="https://www.flipkart.com"
     self.flipkart_url =  self.root_url+"/search?q="+searchString
@@ -58,36 +58,46 @@ class ToExtractReviewsBulk:
     return self.root_url+html_content.findAll("a",{"class":next_page_url_class_id})[0]['href']
 
   def to_fetch_all_reviews(self,content_url):
+    next_url_list=[]
     final_all_reviews=self.to_extract_single_page_reviews(content_url)
     # print(final_all_reviews)
     html_content=self.to_return_html_content(content_url)
     no_of_times_run_class_id="_2MImiq _1Qnn1K"
     no_of_times_run=html_content.findAll("div",{"class":no_of_times_run_class_id})[0].span.text.split()[-1]
-    for _ in range(int(no_of_times_run)):
-      next_page_url=self.to_fetch_next_page_url(content_url)
-      all_reviews=self.to_extract_single_page_reviews(next_page_url)
-      content_url=next_page_url
-      print('======'*30)
-      print(all_reviews)
-      print('======'*30)
-       
-      if len(final_all_reviews)==100:
-        break
-      
+    for idx in range(1,int(no_of_times_run)):
+      print(f'content url ------ >   {content_url}')
+      print(f'no of time run  ------ >   {int(no_of_times_run)}')
+      # next_page_url=self.to_fetch_next_page_url(content_url)
+
+      next_url_list.append(content_url)
+      all_reviews=self.to_extract_single_page_reviews(content_url)
+      content_url_list=[]
+      for idx_ltr,ltr in enumerate(content_url):
+        if idx_ltr==len(content_url)-1:
+          ltr=idx+1
+        all_reviews.append(ltr)
+      content_url=''.join(content_url_list)
       [final_all_reviews.append(review) for review in all_reviews]
+      print(f'all review len',len(final_all_reviews))
+      if len(final_all_reviews)>100:
+        break
       # final_all_reviews.append(all_reviews)
-    return final_all_reviews
+    return final_all_reviews,next_url_list
 
   def combine_all(self):
     all_reviews=[]
+    all_review_page_link_li=[]
     front_page_url=self.flipkart_url
     all_front_page_link=self.to_extract_front_page_details(front_page_url)
-    for link in all_front_page_link[:1]:
+    for link in all_front_page_link:
       all_review_page_link=self.to_featch_all_review_page_link(link)
-      all_reviews.append(self.to_fetch_all_reviews(all_review_page_link))
-      if len(all_reviews)==100:
+      all_review_page_link_li.append(all_review_page_link)
+      rev,next_url=self.to_fetch_all_reviews(all_review_page_link)
+      all_reviews.append(rev)
+      if len(all_reviews[0])>100:
         break
-    print(all_reviews)
-    self.to_save_csv(all_reviews_list=np.array(all_reviews).T, file_path='demo.csv', columns_name=['reviews'])
+      # print(all_reviews)
+    self.to_save_csv(all_reviews_list=np.array(all_reviews[0]).T, file_path='demo.csv', columns_name=['reviews'])
+    return next_url
 
   

@@ -1,1 +1,1 @@
-from ReviewScraperwithSentimentAnalysis.entity.config_entity import DataIngestionConfig,TextPreprocessingConfig,TrainingConfig
+from ReviewScraperwithSentimentAnalysis.entity.config_entity import DataIngestionConfig,TextPreprocessingConfig,TrainingConfig,PretrainedModelConfig
