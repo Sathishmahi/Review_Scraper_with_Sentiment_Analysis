@@ -27,9 +27,13 @@ class Configuration:
         data_ingestion_config_content=self.config_content.get(DataIngestionConstant.DATA_INGESTION_ROOT_KEY)
         try:
             root_dir=os.path.join(self.artifact_dir_name,data_ingestion_config_content.get(DataIngestionConstant.DATA_INGESTION_ROOT_DIR_KEY))
-            review_file_path=os.path.join(root_dir,data_ingestion_config_content.get(DataIngestionConstant.DATA_INGESTION_FILE_NAME_KEY))
-            make_dirs([root_dir])
-            data_ingestion_config=DataIngestionConfig(root_dir=root_dir, review_file_path=review_file_path)
+            review_file_path=os.path.join(root_dir,data_ingestion_config_content.get(DataIngestionConstant.DATA_INGESTION_EXTRACT_FILE_NAME_KEY))
+            extract_image_dir_name=os.path.join(root_dir,data_ingestion_config_content.get(DataIngestionConstant.DATA_INGESTION_EXTRACT_IMAGES_DIR_NAME))
+
+            make_dirs([root_dir,extract_image_dir_name])
+            data_ingestion_config=DataIngestionConfig(root_dir=root_dir, 
+            review_file_path=review_file_path,
+            extract_image_dir_name=extract_image_dir_name)
 
             return data_ingestion_config
         except Exception as e:
@@ -41,7 +45,7 @@ class Configuration:
         text_preprocessing_config=self.config_content.get(TextPreprocessingConstant.TEXT_PREPROCESSING_ROOT_KEY)
         root_dir=os.path.join(self.artifact_dir_name,text_preprocessing_config.get(TextPreprocessingConstant.TEXT_PREPROCESSING_ROOT_DIR_KEY))
         make_dirs([root_dir])
-        processed_data_file_path=os.path.join(root_dir,TextPreprocessingConstant.TEXT_PREPROCESSING_PREPROCESSED_FILE_PATH_KEY)
+        processed_data_file_path=os.path.join(root_dir,text_preprocessing_config.get(TextPreprocessingConstant.TEXT_PREPROCESSING_PREPROCESSED_FILE_PATH_KEY))
         
         text_preprocessing_config=TextPreprocessingConfig(root_dir, processed_data_file_path)
         return text_preprocessing_config

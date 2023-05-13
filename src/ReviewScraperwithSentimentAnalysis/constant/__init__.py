@@ -23,7 +23,10 @@ COLUMNS_NAME=["review","rating"]
 class DataIngestionConstant:
     DATA_INGESTION_ROOT_KEY:str="data_ingestion"
     DATA_INGESTION_ROOT_DIR_KEY:str="root_dir"
-    DATA_INGESTION_FILE_NAME_KEY:str="file_name"
+    DATA_INGESTION_TRAIN_FILE_NAME_KEY:str="train_data_file_name"
+    DATA_INGESTION_EXTRACT_FILE_NAME_KEY:str="extract_review_file_name"
+    DATA_INGESTION_EXTRACT_IMAGES_DIR_NAME:str="extract_img_dir_name"
+
 
 
 @dataclass
@@ -59,3 +62,16 @@ class TrainingConstant:
     TRAINING_EVALUATION_DATA_PER_KEY:float= "EVALUATION_DATA_PER"
     TRAINING_NO_CLASSES_KEY:float= "NO_OF_CLASSES"
     TRAINING_OUT_COLUMN_NAME_KEY:float= "OUT_PUT_COLUMN_NAME"
+
+@dataclass
+class ToExtractImageEtc:
+    URL_CLASS:str= "_1fQZEK"
+    URL_CLASS_TAG:str= 'a'
+    PRICE_CLASS:str= "_30jeq3 _1_WHN1"
+    PRICE_CLASS_TAG:str= "div"
+    SPEC_CLASS:str= "rgWa7D"
+    SPEC_CLASS_TAG:str= "li"
+    OFFER_CLASS="_3Ay6Sb"
+    OFFER_CLASS_TAG="div"
+    IMG_CLASS="_396cs4"
+    IMG_CLASS_TAG="img"

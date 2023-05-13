@@ -20,6 +20,7 @@ class TextPreprocessing:
 
     def __init__(self,Configuration=Configuration()):
         self.text_preprocessing_config=Configuration.get_text_preprocessing_config()
+        self.processed_data_file_path=self.text_preprocessing_config.processed_data_file_path
     
     @staticmethod
     def remove_unwanted_columns(csv_path:Path)->pd.DataFrame:
@@ -35,10 +36,22 @@ class TextPreprocessing:
 
         return df
 
-    def combine_all(self,csv_path:Path=Path(DATA_SET_PATH)):
+    @staticmethod
+    def to_save_csv(df:pd.DataFrame,file_path:Path):
+        df.to_csv(file_path,index=False)
+    
+    def train_combine_all(self,csv_path:Path=Path(DATA_SET_PATH)):
 
-        processed_data_file_path=self.text_preprocessing_config.processed_data_file_path
         df=self.remove_unwanted_columns(csv_path)
         df=self.to_remove_stop_punctuation(df)
-        df.to_csv(processed_data_file_path,index=None)
+        self.to_save_csv(df=df, file_path=self.processed_data_file_path)
+
+
+    def review_combine_all(self,csv_path:Path):
+
+        df=pd.read_csv(csv_path)
+        df=self.to_remove_stop_punctuation(df)
+        self.to_save_csv(df=df, file_path=self.processed_data_file_path)
+    
+
 

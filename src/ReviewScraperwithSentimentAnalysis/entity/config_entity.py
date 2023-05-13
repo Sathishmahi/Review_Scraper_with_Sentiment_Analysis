@@ -4,7 +4,8 @@ from collections import namedtuple
 DataIngestionConfig=namedtuple("DataIngestionConfig", 
                     [
                         "root_dir",
-                        "review_file_path"
+                        "review_file_path",
+                        "extract_image_dir_name"
                     ]
                     )
 

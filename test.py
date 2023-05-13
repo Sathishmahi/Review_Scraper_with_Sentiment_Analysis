@@ -1,4 +1,11 @@
-# from ReviewScraperwithSentimentAnalysis.components.data_ingestion_single import ToExtractReviewsSingle
+from ReviewScraperwithSentimentAnalysis.components.data_ingestion_single import toExtractReviewsSingle
+
+
+toExtractReviewsSingle("redminote7s")
+
+
+
+
 # from ReviewScraperwithSentimentAnalysis.components.text_preprocessing import TextPreprocessing
 # from ReviewScraperwithSentimentAnalysis.components.training import Training
 # import pandas as pd
@@ -29,7 +36,14 @@
 # )
 # print(out)
 
-from ReviewScraperwithSentimentAnalysis.components.hugging_face_pretrained import PreTrained
+# from ReviewScraperwithSentimentAnalysis.components.hugging_face_pretrained import PreTrained
 
-p=PreTrained()
-p.combine_all()
+# p=PreTrained()
+# p.combine_all()
+
+
+
+# from ReviewScraperwithSentimentAnalysis.components.text_preprocessing import TextPreprocessing
+
+# text_preprocessing=TextPreprocessing()
+# df=text_preprocessing.review_combine_all("artifact/data_ingestion/review.csv")
