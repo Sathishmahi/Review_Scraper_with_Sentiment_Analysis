@@ -5,11 +5,13 @@ from ReviewScraperwithSentimentAnalysis.constant import (PARAMS_FILE_PATH,
                                                         DataIngestionConstant,
                                                         TextPreprocessingConstant,
                                                         TrainingConstant,
-                                                        PretrainedModelConstant)
+                                                        PretrainedModelConstant,
+                                                        ReviewSplitConstant)
 from ReviewScraperwithSentimentAnalysis.utils import read_yaml,make_dirs
 from ReviewScraperwithSentimentAnalysis.entity import (DataIngestionConfig,
                                                         TextPreprocessingConfig,
-                                                        TrainingConfig,PretrainedModelConfig)
+                                                        TrainingConfig,PretrainedModelConfig,
+                                                        ReviewSplitConfig)
 
 
 
@@ -54,6 +56,21 @@ class Configuration:
         text_preprocessing_config=TextPreprocessingConfig(root_dir, processed_data_file_path)
         return text_preprocessing_config
 
+
+    def get_review_split_config(self)->ReviewSplitConfig:
+
+        review_split_content=self.config_content(ReviewSplitConstant.ReviewSplit_ROOT_KEY)
+        root_dir=os.path.join(self.artifact_dir_name,review_split_content(ReviewSplitConstant.ReviewSplit_ROOT_DIR_KEY))
+        review_split_file_name=os.path.join(root_dir,review_split_content(ReviewSplitConstant.ReviewSplit_ROOT_DIR_KEY))
+        review_csv_path=self.get_data_ingestion_config().extract_product_csv_file_name
+        make_dirs(dirs_list=[Path(root_dir)])
+
+        review_split_config=ReviewSplitConfig(root_dir=root_dir, 
+                        review_csv_path=review_csv_path,
+                        review_split_file_name=review_split_file_name,
+                        )
+
+        return review_split_config
 
     def get_pretrained_config(self)->PretrainedModelConfig:
 

@@ -11,6 +11,13 @@ DataIngestionConfig=namedtuple("DataIngestionConfig",
                     )
 
 
+ReviewSplitConfig=namedtuple("ReviewSplitConfig", 
+                    [
+                        "root_dir",
+                        "review_csv_path",
+                        "review_split_file_name"
+                    ])
+
 TextPreprocessingConfig=namedtuple("TextPreprocessingConfig", 
                                     [
                                         "root_dir",

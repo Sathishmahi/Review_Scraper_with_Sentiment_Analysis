@@ -54,13 +54,16 @@ class Training:
         model.summary()
         return model
     def compile_model(self,model:tf.keras.Model):
+        
         model.compile(loss='sparse_categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
         return model
     def fit_model(self,train_data,eval_data,model):
+
         epochs=self.training_config.epochs
         model.fit(train_data,validation_data=eval_data,epochs=epochs)
         return model
     def save_model(self,path:Path,model:tf.keras.Model):
+
         model.save(path,save_format='tf')
 
     def combine_all(self):

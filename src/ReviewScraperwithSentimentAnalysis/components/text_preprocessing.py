@@ -33,8 +33,10 @@ class TextPreprocessing:
         df[COLUMNS_NAME[0]]=df[COLUMNS_NAME[0]].str.lower()
         all_stop=[stop.lower() for stop in stopwords.words('english') if ('no' not in stop) and ("n'" not in stop) and ("won" not in stop)]
         df[COLUMNS_NAME[0]]=df[COLUMNS_NAME[0]].apply( lambda sen:' '.join([stem.stem(word) for word in nltk.word_tokenize(sen) if word not in all_punctuation and all_stop]))
+        df[COLUMNS_NAME[0]]=df[COLUMNS_NAME[0]].apply(lambda s : s.encode('ascii','ignore').decode())
 
         return df
+
 
     @staticmethod
     def to_save_csv(df:pd.DataFrame,file_path:Path):

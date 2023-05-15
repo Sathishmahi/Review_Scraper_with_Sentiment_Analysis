@@ -6,6 +6,10 @@ data_ingestion:
   extract_img_dir_name: images
   extract_product_csv_file_name: extract_product.csv
 
+review_split:
+  root_dir: review_split
+  review_split_file_name: split_review.csv
+
 text_preprocessing:
   root_dir: text_preprocessing
   processed_data_file_path: preprocess.csv

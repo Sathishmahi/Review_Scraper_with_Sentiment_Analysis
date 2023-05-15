@@ -3,7 +3,7 @@ import time
 from dataclasses import dataclass
 
 
-WAIT=0.4
+WAIT=0.3
 CONFIG_FILE_PATH=os.path.join("config","config.yaml")
 PARAMS_FILE_PATH=os.path.join("params.yaml")
 
@@ -16,6 +16,7 @@ DATA_SET_PATH="flipkart_data.csv"
 
 COLUMNS_NAME=["review","rating"]
 EXTRACT_PRODUCT_COLUMNS_NAME=["price","offer","spec","details"]
+CAMERA_LABELS,DISPLAY_LABELS,BATTERY_LABELS=['good camera','bad camera'],['good dispaly','bad diaplay'],['good battery performance','bad battery performance']
 
 
 
@@ -46,6 +47,12 @@ class PretrainedModelConstant:
     PRETRAINED_ROOT_DIR_KEY:str="root_dir"
     PRETRAINED_MODEL_DIR_KEY:str="hugging_face_transfromers_model_dir"
     PRETRAINED_MODEL_NAME_KEY:str="pretrained_model_name"
+
+@dataclass
+class ReviewSplitConstant:
+    ReviewSplit_ROOT_KEY:str="review_split"
+    ReviewSplit_ROOT_DIR_KEY:str="root_dir"
+    ReviewSplit_FILE_NAME_KEY:str="review_split_file_name"
 
 
 @dataclass
