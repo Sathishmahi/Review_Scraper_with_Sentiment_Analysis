@@ -26,14 +26,18 @@ class Configuration:
 
         data_ingestion_config_content=self.config_content.get(DataIngestionConstant.DATA_INGESTION_ROOT_KEY)
         try:
+            
             root_dir=os.path.join(self.artifact_dir_name,data_ingestion_config_content.get(DataIngestionConstant.DATA_INGESTION_ROOT_DIR_KEY))
             review_file_path=os.path.join(root_dir,data_ingestion_config_content.get(DataIngestionConstant.DATA_INGESTION_EXTRACT_FILE_NAME_KEY))
             extract_image_dir_name=os.path.join(root_dir,data_ingestion_config_content.get(DataIngestionConstant.DATA_INGESTION_EXTRACT_IMAGES_DIR_NAME))
-
+            extract_product_csv_file_name=os.path.join(root_dir,DataIngestionConstant.DATA_INGESTION_EXTRACT_PRODUCT_FILE_NAME_KEY)
+            
             make_dirs([root_dir,extract_image_dir_name])
+            
             data_ingestion_config=DataIngestionConfig(root_dir=root_dir, 
             review_file_path=review_file_path,
-            extract_image_dir_name=extract_image_dir_name)
+            extract_image_dir_name=extract_image_dir_name,
+            extract_product_csv_file_name=extract_image_dir_name)
 
             return data_ingestion_config
         except Exception as e:

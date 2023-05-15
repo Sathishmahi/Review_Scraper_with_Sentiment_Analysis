@@ -3,6 +3,7 @@ import time
 from dataclasses import dataclass
 
 
+WAIT=0.4
 CONFIG_FILE_PATH=os.path.join("config","config.yaml")
 PARAMS_FILE_PATH=os.path.join("params.yaml")
 
@@ -14,6 +15,7 @@ DATA_SET_PATH="flipkart_data.csv"
 
 
 COLUMNS_NAME=["review","rating"]
+EXTRACT_PRODUCT_COLUMNS_NAME=["price","offer","spec","details"]
 
 
 
@@ -26,6 +28,7 @@ class DataIngestionConstant:
     DATA_INGESTION_TRAIN_FILE_NAME_KEY:str="train_data_file_name"
     DATA_INGESTION_EXTRACT_FILE_NAME_KEY:str="extract_review_file_name"
     DATA_INGESTION_EXTRACT_IMAGES_DIR_NAME:str="extract_img_dir_name"
+    DATA_INGESTION_EXTRACT_PRODUCT_FILE_NAME_KEY:str="extract_product_csv_file_name"
 
 
 
@@ -64,14 +67,30 @@ class TrainingConstant:
     TRAINING_OUT_COLUMN_NAME_KEY:float= "OUT_PUT_COLUMN_NAME"
 
 @dataclass
-class ToExtractImageEtc:
-    URL_CLASS:str= "_1fQZEK"
-    URL_CLASS_TAG:str= 'a'
-    PRICE_CLASS:str= "_30jeq3 _1_WHN1"
-    PRICE_CLASS_TAG:str= "div"
-    SPEC_CLASS:str= "rgWa7D"
-    SPEC_CLASS_TAG:str= "li"
-    OFFER_CLASS="_3Ay6Sb"
-    OFFER_CLASS_TAG="div"
-    IMG_CLASS="_396cs4"
-    IMG_CLASS_TAG="img"
+class ToExtractImageEtcConstat:
+    OVER_ALL_CLASS="_2kHMtA"
+    OVER_ALL_ELE_TYPE="div"
+
+    OVER_ALL_REVIEWS_CLASS="_3LWZlK"
+    OVER_ALL_REVIEW_ELE_TYPE="div"
+
+    MODEL_NAME_CLASS="_4rR01T"
+    MODEL_NAME_ELE_TYPE="div"
+
+    MODEL_DETAILS_CLASS="rgWa7D"
+    MODEL_DETAILS__ELE_TYPE="li"
+
+    PRODUCT_IMAGE_CLASS="_396cs4"
+    PRODUCT_IMAGE_ELE_TYPE="img"
+
+    PRODUCT_PRICE_CLASS="_30jeq3 _1_WHN1"
+    PRODUCT_PRICE_ELE_TYPE="div"
+
+    PRODUCT_OFFER_CLASS="_3Ay6Sb"
+    PRODUCT_OFFER_ELE_TYPE="div"
+
+    FREE_DELIVERY_CLASS="_2Tpdn3"
+    FREE_DELIVERY_ELE_TYPE="div"
+
+    BANK_OFFER_CLASS="_2Tpdn3"
+    BANK_OFFER_ELE_TYPE="div"

@@ -5,7 +5,8 @@ DataIngestionConfig=namedtuple("DataIngestionConfig",
                     [
                         "root_dir",
                         "review_file_path",
-                        "extract_image_dir_name"
+                        "extract_image_dir_name",
+                        "extract_product_csv_file_name"
                     ]
                     )
 

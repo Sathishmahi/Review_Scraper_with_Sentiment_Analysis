@@ -26,14 +26,20 @@ def read_yaml(yaml_file_path:Path=Path(CONFIG_FILE_PATH))->dict:
         raise e
 
 
+def to_dataframe(data_dict:dict):
+    
+    return pd.DataFrame(data=data_dict)
+    
+
 def to_save_csv(all_reviews,file_path:str,columns_name:list=None):
     
+    if isinstance(all_reviews, pd.DataFrame):
+        all_reviews.to_csv(file_path,index=False)
     if isinstance(all_reviews, list):
         df=pd.DataFrame(all_reviews,columns=columns_name)    
     else:
         df=pd.DataFrame(all_reviews)
-
-    df.to_csv(file_path,index=None)
+        df.to_csv(file_path,index=False)
 
 
 
