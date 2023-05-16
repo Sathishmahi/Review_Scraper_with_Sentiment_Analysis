@@ -168,5 +168,6 @@ model_path
 hugging_face_model
 *.jpg
 *.pkl
+
 node_modules
 package*.json

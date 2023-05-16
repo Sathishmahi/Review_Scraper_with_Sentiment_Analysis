@@ -1,0 +1,17 @@
+schema: '2.0'
+stages:
+  review_scraping:
+    cmd: python src/ReviewScraperwithSentimentAnalysis/components/data_ingestion_single.py
+    deps:
+    - path: src/ReviewScraperwithSentimentAnalysis/components/data_ingestion_single.py
+      md5: 89584b30ca346815a1d8f342777c480d
+      size: 6353
+    - path: src/ReviewScraperwithSentimentAnalysis/utils
+      md5: 511798724b249d2e48fa923fec64488b.dir
+      size: 8316
+      nfiles: 8
+    outs:
+    - path: artifact/data_ingestion
+      md5: 25fa86ccf3f3ab10c8722c10cb90662b.dir
+      size: 230019
+      nfiles: 26

@@ -22,10 +22,10 @@ extract_product_csv_file_name = data_ingestion_config.extract_product_csv_file_n
 wait = WAIT
 
 
-def to_save_img(all_img_links: list):
-    for li in tqdm(all_img_links, desc="to save image"):
+def to_save_img(all_img_links: list[str],image_name_list:list[str]):
+    for li,img_name in zip(all_img_links,image_name_list):
         with open(
-            os.path.join(extract_image_dir_name, f"img_{str(uuid.uuid1())}.jpg"), "wb"
+            os.path.join(extract_image_dir_name, f"{img_name}.jpg"), "wb"
         ) as img:
             with uReq(li) as req:
                 img.write(req.read())
@@ -98,15 +98,6 @@ def toExtractImage_etc(html_con) -> dict:
         model_details_list.append(over_all_product_details)
         time.sleep(wait)
 
-    [
-        "image_url",
-        "model_name",
-        "model_details",
-        "over_all_reviews",
-        "product_cost",
-        "product_offer",
-        "free_delivery_list",
-    ]
     final_dict = {
         EXTRACT_PRODUCT_COLUMNS_NAME[0]: image_urls_list,
         EXTRACT_PRODUCT_COLUMNS_NAME[1]: model_name_list,
@@ -116,11 +107,10 @@ def toExtractImage_etc(html_con) -> dict:
         EXTRACT_PRODUCT_COLUMNS_NAME[5]: all_product_offer_list,
         EXTRACT_PRODUCT_COLUMNS_NAME[6]: free_delivery_list,
     }
+    image_name_list=[img_name.replace(" ","_").replace(",","_").replace("(","").replace(")","") for img_name in model_name_list]
+    to_save_img(all_img_links=image_urls_list,image_name_list=image_name_list)
     return final_dict
-    print(
-        f"{len(image_urls_list)},{len(model_name_list)},{len(model_details_list)},{len(over_all_reviews_list)},{len(all_product_cost_list)},{len(all_product_offer_list)},{len(free_delivery_list)}"
-    )
-    # print(f"{(image_urls_list)},{(model_name_list)},{(model_details_list)},{(over_all_reviews_list)},{(all_product_cost_list)},{(all_product_offer_list)},{(free_delivery_list)}")
+    
 
 
 def toExtractReviewsSingle(
