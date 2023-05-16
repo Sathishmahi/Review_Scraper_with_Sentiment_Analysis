@@ -8,7 +8,11 @@ data_ingestion:
 
 review_split:
   root_dir: review_split
-  review_split_file_name: split_review.csv
+  review_split_dir_name: split_review_dir
+  battery_file_name: battery.pkl
+  display_file_name: display.pkl
+  camera_file_name: camera.pkl
+  overall_file_name: overall.pkl
 
 text_preprocessing:
   root_dir: text_preprocessing

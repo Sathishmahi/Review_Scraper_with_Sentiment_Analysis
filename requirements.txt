@@ -6,4 +6,6 @@ nltk
 Pyyaml
 pandas
 sklearn
+thefuzz
+python-Levenshtein
 -e .

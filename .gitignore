@@ -167,3 +167,4 @@ cython_debug/
 model_path
 hugging_face_model
 *.jpg
+*.pkl
