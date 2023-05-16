@@ -15,11 +15,9 @@ from ReviewScraperwithSentimentAnalysis.constant import (
 from ReviewScraperwithSentimentAnalysis.utils import to_save_csv, to_dataframe
 from ReviewScraperwithSentimentAnalysis.constant import ToExtractImageEtcConstat, WAIT
 
-
 data_ingestion_config = Configuration().get_data_ingestion_config()
 extract_image_dir_name = data_ingestion_config.extract_image_dir_name
 extract_product_csv_file_name = data_ingestion_config.extract_product_csv_file_name
-
 
 wait = WAIT
 
@@ -34,7 +32,7 @@ def to_save_img(all_img_links: list):
         time.sleep(wait)
 
 
-def toExtractImage_etc(html_con):
+def toExtractImage_etc(html_con) -> dict:
     (
         image_urls_list,
         model_name_list,
@@ -100,12 +98,33 @@ def toExtractImage_etc(html_con):
         model_details_list.append(over_all_product_details)
         time.sleep(wait)
 
-    # print(f"{len(image_urls_list)},{len(model_name_list)},{len(model_details_list)},{len(over_all_reviews_list)},{len(all_product_cost_list)},{len(all_product_offer_list)},{len(free_delivery_list)}")
+    [
+        "image_url",
+        "model_name",
+        "model_details",
+        "over_all_reviews",
+        "product_cost",
+        "product_offer",
+        "free_delivery_list",
+    ]
+    final_dict = {
+        EXTRACT_PRODUCT_COLUMNS_NAME[0]: image_urls_list,
+        EXTRACT_PRODUCT_COLUMNS_NAME[1]: model_name_list,
+        EXTRACT_PRODUCT_COLUMNS_NAME[2]: model_details_list,
+        EXTRACT_PRODUCT_COLUMNS_NAME[3]: over_all_reviews_list,
+        EXTRACT_PRODUCT_COLUMNS_NAME[4]: all_product_cost_list,
+        EXTRACT_PRODUCT_COLUMNS_NAME[5]: all_product_offer_list,
+        EXTRACT_PRODUCT_COLUMNS_NAME[6]: free_delivery_list,
+    }
+    return final_dict
+    print(
+        f"{len(image_urls_list)},{len(model_name_list)},{len(model_details_list)},{len(over_all_reviews_list)},{len(all_product_cost_list)},{len(all_product_offer_list)},{len(free_delivery_list)}"
+    )
     # print(f"{(image_urls_list)},{(model_name_list)},{(model_details_list)},{(over_all_reviews_list)},{(all_product_cost_list)},{(all_product_offer_list)},{(free_delivery_list)}")
 
 
 def toExtractReviewsSingle(
-    searchString: str, Configuration_cls=Configuration()
+    searchString: str, configuration=Configuration()
 ) -> DataIngestionConfig:
     searchString = searchString.replace(" ", "").replace("-", "")
     flipkart_url = "https://www.flipkart.com/search?q=" + searchString
@@ -113,7 +132,7 @@ def toExtractReviewsSingle(
     flipkartPage = uClient.read()
     uClient.close()
     flipkart_html = bs(flipkartPage, "html.parser")
-    toExtractImage_etc(html_con=flipkart_html)
+    extract_content_details_dict = toExtractImage_etc(html_con=flipkart_html)
     bigboxes = flipkart_html.findAll("div", {"class": "_1AtVbE col-12-12"})
     del bigboxes[0:3]
     box = bigboxes[0]
@@ -126,7 +145,6 @@ def toExtractReviewsSingle(
     for commentbox in tqdm(commentboxes, desc="to extract comment in html_page"):
         try:
             comtag = commentbox.div.div.find_all("div", {"class": ""})
-            # custComment.encode(encoding='utf-8')
             custComment = comtag[0].div.text
             reviews.append(custComment)
         except Exception as e:
@@ -137,5 +155,12 @@ def toExtractReviewsSingle(
         except:
             ratings.append("No Rating")
 
-    file_path = Configuration_cls.get_data_ingestion_config().review_file_path
+    data_ingestion_content = configuration.get_data_ingestion_config()
+    file_path = data_ingestion_content.review_file_path
+    extract_product_csv_file_path = data_ingestion_content.extract_product_csv_file_name
     to_save_csv({COLUMNS_NAME[0]: reviews, COLUMNS_NAME[1]: ratings}, file_path)
+    to_save_csv(extract_content_details_dict, extract_product_csv_file_path)
+
+
+if __name__ == "__main__":
+    toExtractReviewsSingle(searchString="iphone14")

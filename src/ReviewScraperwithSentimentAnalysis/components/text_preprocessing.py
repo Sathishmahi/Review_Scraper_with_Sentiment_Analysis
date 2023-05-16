@@ -3,11 +3,11 @@ import string
 
 nltk.download("stopwords")
 nltk.download("punkt")
+nltk.download("wordnet")
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 from pathlib import Path
 
-nltk.download("wordnet")
 from nltk.corpus import stopwords
 from nltk.corpus import stopwords
 from ReviewScraperwithSentimentAnalysis.constant import DATA_SET_PATH, COLUMNS_NAME
@@ -29,7 +29,9 @@ class TextPreprocessing:
         df = pd.read_csv(csv_path).drop(columns=COLUMNS_NAME[1])
         return df
 
-    def to_remove_stop_punctuation(self, df: pd.DataFrame) -> pd.DataFrame:
+    def to_remove_stop_punctuation(
+        self, df: pd.DataFrame, min_review_len: int
+    ) -> pd.DataFrame:
         all_punctuation = string.punctuation
         df[COLUMNS_NAME[0]] = df[COLUMNS_NAME[0]].str.lower()
         all_stop = [
@@ -50,6 +52,12 @@ class TextPreprocessing:
             lambda s: s.encode("ascii", "ignore").decode()
         )
 
+        df[COLUMNS_NAME[0]] = df[COLUMNS_NAME[0]].apply(
+            lambda s: s if len(s) > min_review_len else None
+        )
+
+        df.dropna(inplace=True)
+
         return df
 
     @staticmethod
@@ -61,7 +69,14 @@ class TextPreprocessing:
         df = self.to_remove_stop_punctuation(df)
         self.to_save_csv(df=df, file_path=self.processed_data_file_path)
 
-    def review_combine_all(self, csv_path: Path):
+    def review_combine_all(self):
+        csv_path = self.text_preprocessing_config.review_file_path
+        min_review_len = self.text_preprocessing_config.min_review_len
         df = pd.read_csv(csv_path)
-        df = self.to_remove_stop_punctuation(df)
+        df = self.to_remove_stop_punctuation(df, min_review_len=min_review_len)
         self.to_save_csv(df=df, file_path=self.processed_data_file_path)
+
+
+if __name__ == "__main__":
+    preprocess = TextPreprocessing()
+    preprocess.review_combine_all()

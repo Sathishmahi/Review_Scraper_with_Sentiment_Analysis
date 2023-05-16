@@ -21,3 +21,8 @@ class PreTrained:
         save_model_path = self.pretrained_config.pretrained_model_dir
         model = self.load_model(model_name=model_name)
         self.save_model(model=model, save_model_path=save_model_path)
+
+
+if __name_ == "__main__":
+    pretrain = PreTrained()
+    pretrain.combine_all()

@@ -29,3 +29,7 @@ pretrained_model:
   hugging_face_transfromers_model_dir: hugging_face_model
   pretrained_model_name: roberta-large-mnli
    
+prediction:
+  root_dir: prediction
+  predeiction_csv_file_path: prediction.csv
+  

@@ -1,7 +1,7 @@
 from ReviewScraperwithSentimentAnalysis.components.data_ingestion_single import toExtractReviewsSingle
 
 
-toExtractReviewsSingle("redminote7s")
+# toExtractReviewsSingle("redminote7s")
 
 
 
@@ -47,3 +47,8 @@ toExtractReviewsSingle("redminote7s")
 
 # text_preprocessing=TextPreprocessing()
 # df=text_preprocessing.review_combine_all("artifact/data_ingestion/review.csv")
+
+# from transformers import pipeline
+# model=pipeline('zero-shot-classification',model="/config/workspace/artifact/pretrained_model/hugging_face_model")
+# out=model("hello how are you",candidate_labels=["postive","negative"])
+# print(out)

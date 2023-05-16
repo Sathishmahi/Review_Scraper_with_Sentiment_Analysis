@@ -13,14 +13,24 @@ LOGGING_FILE_NAME = "runing_logs.log"
 CURRET_TIME_STAMP = time.asctime().replace(" ", "_").replace(":", "_")
 DATA_SET_PATH = "flipkart_data.csv"
 
+FINAL_LABEL_TO_VALUE_DICT = {0: "Neutral", 1: "Positive", -1: "Negative"}
 
 COLUMNS_NAME = ["review", "rating"]
-EXTRACT_PRODUCT_COLUMNS_NAME = ["price", "offer", "spec", "details"]
+EXTRACT_PRODUCT_COLUMNS_NAME = [
+    "image_url",
+    "model_name",
+    "model_details",
+    "over_all_reviews",
+    "product_cost",
+    "product_offer",
+    "free_delivery_list",
+]
 SPLIT_REVIES_COLUMNS_NAME = ["battery", "display", "overall", "camera"]
-CAMERA_LABELS, DISPLAY_LABELS, BATTERY_LABELS = (
+CAMERA_LABELS, DISPLAY_LABELS, BATTERY_LABELS, OVERALL_LABELS = (
     ["good camera", "bad camera"],
     ["good dispaly", "bad diaplay"],
     ["good battery", "bad battery"],
+    ["good", "bad"],
 )
 
 
@@ -42,6 +52,7 @@ class TextPreprocessingConstant:
     TEXT_PREPROCESSING_ROOT_KEY: str = "text_preprocessing"
     TEXT_PREPROCESSING_ROOT_DIR_KEY: str = "root_dir"
     TEXT_PREPROCESSING_PREPROCESSED_FILE_PATH_KEY: str = "processed_data_file_path"
+    TEXT_PREPROCESSING_MIN_REVIEW_LEN_KEY: int = "MIN_REVIEW_LEN"
 
 
 @dataclass
@@ -79,6 +90,13 @@ class TrainingConstant:
     TRAINING_EVALUATION_DATA_PER_KEY: float = "EVALUATION_DATA_PER"
     TRAINING_NO_CLASSES_KEY: float = "NO_OF_CLASSES"
     TRAINING_OUT_COLUMN_NAME_KEY: float = "OUT_PUT_COLUMN_NAME"
+
+
+@dataclass
+class PredictionConstant:
+    PREDICTION_ROOT_KEY: str = "prediction"
+    PREDICTION_ROOT_DIR_KEY: str = "root_dir"
+    PREDICTION_CSV_FILE_PATH_KEY: str = "predeiction_csv_file_path"
 
 
 @dataclass

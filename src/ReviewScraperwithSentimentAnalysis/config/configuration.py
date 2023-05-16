@@ -8,6 +8,7 @@ from ReviewScraperwithSentimentAnalysis.constant import (
     TrainingConstant,
     PretrainedModelConstant,
     ReviewSplitConstant,
+    PredictionConstant,
 )
 from ReviewScraperwithSentimentAnalysis.utils import read_yaml, make_dirs
 from ReviewScraperwithSentimentAnalysis.entity import (
@@ -16,6 +17,7 @@ from ReviewScraperwithSentimentAnalysis.entity import (
     TrainingConfig,
     PretrainedModelConfig,
     ReviewSplitConfig,
+    PredictionConfig,
 )
 
 
@@ -51,7 +53,9 @@ class Configuration:
             )
             extract_product_csv_file_name = os.path.join(
                 root_dir,
-                DataIngestionConstant.DATA_INGESTION_EXTRACT_PRODUCT_FILE_NAME_KEY,
+                data_ingestion_config_content.get(
+                    DataIngestionConstant.DATA_INGESTION_EXTRACT_PRODUCT_FILE_NAME_KEY
+                ),
             )
 
             make_dirs([root_dir, extract_image_dir_name])
@@ -77,6 +81,8 @@ class Configuration:
                 TextPreprocessingConstant.TEXT_PREPROCESSING_ROOT_DIR_KEY
             ),
         )
+
+        review_file_path = self.get_data_ingestion_config().review_file_path
         make_dirs([root_dir])
         processed_data_file_path = os.path.join(
             root_dir,
@@ -85,10 +91,41 @@ class Configuration:
             ),
         )
 
+        min_review_len = self.params_content.get(
+            TextPreprocessingConstant.TEXT_PREPROCESSING_MIN_REVIEW_LEN_KEY
+        )
+
         text_preprocessing_config = TextPreprocessingConfig(
-            root_dir, processed_data_file_path
+            root_dir=root_dir,
+            processed_data_file_path=processed_data_file_path,
+            min_review_len=min_review_len,
+            review_file_path=review_file_path,
         )
         return text_preprocessing_config
+
+    def get_prediciton_config(self) -> PredictionConfig:
+        prediction_content = self.config_content.get(
+            PredictionConstant.PREDICTION_ROOT_KEY
+        )
+        root_dir = os.path.join(
+            self.artifact_dir_name,
+            prediction_content.get(PredictionConstant.PREDICTION_ROOT_DIR_KEY),
+        )
+        splited_reviews_dir_path = self.get_review_split_config().review_split_dir_name
+        pretrain_model_path = self.get_pretrained_config().pretrained_model_dir
+        predeiction_csv_file_path = prediction_content.get(
+            PredictionConstant.PREDICTION_CSV_FILE_PATH_KEY
+        )
+        make_dirs(dirs_list=[root_dir])
+
+        prediction_config = PredictionConfig(
+            root_dir=root_dir,
+            splited_reviews_dir_path=splited_reviews_dir_path,
+            pretrain_model_path=pretrain_model_path,
+            predeiction_csv_file_path=predeiction_csv_file_path,
+        )
+
+        return prediction_config
 
     def get_review_split_config(self) -> ReviewSplitConfig:
         review_split_content = self.config_content.get(

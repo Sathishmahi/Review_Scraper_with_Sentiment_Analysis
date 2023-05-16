@@ -7,6 +7,14 @@ from ReviewScraperwithSentimentAnalysis import logging
 import yaml
 
 
+def to_load_pkl(pkl_file_path: Path) -> pd.Series:
+    if not os.path.exists(path=pkl_file_path):
+        raise FileNotFoundError(f"file not found {pkl_file_path}")
+    with open(pkl_file_path, "rb") as pkl_file:
+        loaded_data = pickle.load(pkl_file)
+    return loaded_data
+
+
 def make_dirs(dirs_list: list, log_or_not=True):
     try:
         for dir in dirs_list:
@@ -32,13 +40,13 @@ def to_dataframe(data_dict: dict):
     return pd.DataFrame(data=data_dict)
 
 
-def to_save_csv(all_reviews, file_path: str, columns_name: list = None):
+def to_save_csv(all_reviews, file_path: str, columns_name: list = None, index=None):
     if isinstance(all_reviews, pd.DataFrame):
         all_reviews.to_csv(file_path, index=False)
     if isinstance(all_reviews, list):
         df = pd.DataFrame(all_reviews, columns=columns_name)
     else:
-        df = pd.DataFrame(all_reviews)
+        df = pd.DataFrame(all_reviews, index=index)
         df.to_csv(file_path, index=False)
 
 

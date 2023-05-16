@@ -25,9 +25,19 @@ ReviewSplitConfig = namedtuple(
 )
 
 TextPreprocessingConfig = namedtuple(
-    "TextPreprocessingConfig", ["root_dir", "processed_data_file_path"]
+    "TextPreprocessingConfig",
+    ["root_dir", "review_file_path", "processed_data_file_path", "min_review_len"],
 )
 
+PredictionConfig = namedtuple(
+    "PredictionConfig",
+    [
+        "root_dir",
+        "splited_reviews_dir_path",
+        "pretrain_model_path",
+        "prediction_csv_file_path",
+    ],
+)
 
 TrainingConfig = namedtuple(
     "TrainingConfig",
