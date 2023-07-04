@@ -113,9 +113,9 @@ class Configuration:
         )
         splited_reviews_dir_path = self.get_review_split_config().review_split_dir_name
         pretrain_model_path = self.get_pretrained_config().pretrained_model_dir
-        predeiction_csv_file_path = prediction_content.get(
+        predeiction_csv_file_path =os.path.join(root_dir,prediction_content.get(
             PredictionConstant.PREDICTION_CSV_FILE_PATH_KEY
-        )
+        ))
         make_dirs(dirs_list=[root_dir])
 
         prediction_config = PredictionConfig(

@@ -153,4 +153,4 @@ def toExtractReviewsSingle(
 
 
 if __name__ == "__main__":
-    toExtractReviewsSingle(searchString="iphone14")
+    toExtractReviewsSingle(searchString="redminote7s")
