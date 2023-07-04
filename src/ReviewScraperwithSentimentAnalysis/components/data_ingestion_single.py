@@ -21,7 +21,7 @@ extract_image_dir_name = data_ingestion_config.extract_image_dir_name
 extract_product_csv_file_name = data_ingestion_config.extract_product_csv_file_name
 
 wait = WAIT
-
+STAGE_NAME = "toExtractReviewsSingle"
 
 def to_save_img(all_img_links: list[str], image_name_list: list[str]):
     for li, img_name in zip(all_img_links, image_name_list):
@@ -156,4 +156,6 @@ def toExtractReviewsSingle(
 
 
 if __name__ == "__main__":
+    logging.info(msg=f" >>>>>>  START {STAGE_NAME}    >>>>>>")
     toExtractReviewsSingle(searchString="redminote7s")
+    logging.info(msg=f" >>>>>>  END {STAGE_NAME}    >>>>>>")

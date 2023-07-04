@@ -14,7 +14,7 @@ from transformers import pipeline
 # import pandas as pd
 import numpy as np
 from pathlib import Path
-
+STAGE_NAME="Prediction"
 
 class Prediction:
     def __init__(self, configuration=Configuration()) -> None:
@@ -102,8 +102,6 @@ class Prediction:
             reviews_list=data_dict.values(),
             candidates_labels=list(data_dict.keys()),
         )
-        print(f"=== final_dict ====")
-        print(final_dict)
         to_save_csv(
             all_reviews=final_dict,
             file_path=prediction_csv_file_path,
@@ -112,5 +110,7 @@ class Prediction:
 
 
 if __name__ == "__main__":
+    logging.info(f"<<<<<<    START {STAGE_NAME}   >>>>>>>")
     prediction = Prediction()
     prediction.combine_all()
+    logging.info(f"<<<<<<    END {STAGE_NAME}     >>>>>>>")

@@ -15,6 +15,7 @@ is_click = st.button(label="Predict",key="key_1")
 prediction_csv_file_path = (
     Configuration().get_prediciton_config().prediction_csv_file_path
 )
+extract_product_csv_file_path=data_ingestion_config=Configuration().get_data_ingestion_config().extract_product_csv_file_name
 
 if is_click:
     st.session_state.disabled = False
@@ -34,7 +35,7 @@ if is_click:
         logging.exception(msg=f"somthing wrong result returncode {result.returncode}")
         sys.exit()
 
-    if not os.path.exists(prediction_csv_file_path):
+    if not os.path.exists(prediction_csv_file_path) or not os.path.exists(path=extract_product_csv_file_path):
         msg=f"prediction csv file not fount {prediction_csv_file_path}"
         logging.exception(msg=msg)
         raise FileNotFoundError(
@@ -43,4 +44,8 @@ if is_click:
     df = pd.read_csv(prediction_csv_file_path)
     df=df.drop_duplicates()
     st.dataframe(df)
+    st.write("all product varients details")
+    df_extract=pd.read_csv(extract_product_csv_file_path)
+    df_extract=df_extract.drop_duplicates()
+    st.dataframe(df_extract)
     logging.info(msg=f'\n\n ALL PIPELINE RUN SUCESSFULLY ')

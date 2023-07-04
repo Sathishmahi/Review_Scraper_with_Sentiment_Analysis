@@ -65,6 +65,3 @@ def to_save_pkl(
             raise Exception(
                 f"to_save_pkl content only allowed list not {type(content)} or columns list length  mustbe  equal to contents list"
             )
-
-
-# make_dirs(['demo'])a

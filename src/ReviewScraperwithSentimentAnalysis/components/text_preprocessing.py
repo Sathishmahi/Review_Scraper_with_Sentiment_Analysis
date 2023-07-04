@@ -13,9 +13,11 @@ from nltk.corpus import stopwords
 from ReviewScraperwithSentimentAnalysis.constant import DATA_SET_PATH, COLUMNS_NAME
 from ReviewScraperwithSentimentAnalysis.config import Configuration
 import pandas as pd
+from ReviewScraperwithSentimentAnalysis import logging
 
 stem = PorterStemmer()
 
+STAGE_NAME = "TextPreprocessing"
 
 class TextPreprocessing:
     def __init__(self, Configuration=Configuration()):
@@ -74,9 +76,12 @@ class TextPreprocessing:
         min_review_len = self.text_preprocessing_config.min_review_len
         df = pd.read_csv(csv_path)
         df = self.to_remove_stop_punctuation(df, min_review_len=min_review_len)
+        logging.info(f" after preprocess the data , dataset save into {self.processed_data_file_path}")
         self.to_save_csv(df=df, file_path=self.processed_data_file_path)
 
 
 if __name__ == "__main__":
+    logging.info(f"<<<<<<    START {STAGE_NAME}    >>>>>>>")
     preprocess = TextPreprocessing()
     preprocess.review_combine_all()
+    logging.info(f"<<<<<<    END {STAGE_NAME}      >>>>>>>")
