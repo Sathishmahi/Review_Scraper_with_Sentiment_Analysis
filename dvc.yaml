@@ -1,11 +1,11 @@
 stages:
-  review_scraping:
-    cmd: python src/ReviewScraperwithSentimentAnalysis/components/data_ingestion_single.py
-    deps:
-      - src/ReviewScraperwithSentimentAnalysis/components/data_ingestion_single.py
-      - src/ReviewScraperwithSentimentAnalysis/utils
-    outs:
-      - artifact/data_ingestion
+  # review_scraping:
+    # cmd: python src/ReviewScraperwithSentimentAnalysis/components/data_ingestion_single.py
+    # deps:
+    #   - src/ReviewScraperwithSentimentAnalysis/components/data_ingestion_single.py
+    #   - src/ReviewScraperwithSentimentAnalysis/utils
+    # outs:
+    #   - artifact/data_ingestion
 
   data_preprocessing:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/text_preprocessing.py

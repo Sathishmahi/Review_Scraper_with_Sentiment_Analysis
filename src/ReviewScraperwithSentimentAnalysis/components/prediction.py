@@ -48,7 +48,8 @@ class Prediction:
         ), len([1 for rev in analysis_list if "bad" in rev])
         # print(no_positive_review,no_negative_review)
         total_reviews = no_positive_review + no_negative_review
-        if not total_reviews:total_reviews=1
+        if not total_reviews:
+            total_reviews = 1
         if (
             abs(
                 (no_positive_review / total_reviews)
@@ -84,9 +85,11 @@ class Prediction:
 
             out_final = self.to_return_max_prob(analysis_list=final_li)
             # category = candidate_labels[0].split(" ")[1]
-            if len(candidate_labels[0].split(" "))>1:
+            if len(candidate_labels[0].split(" ")) > 1:
                 category = candidate_labels[0].split(" ")[1]
-                final_dict.update({f"{category}": FINAL_LABEL_TO_VALUE_DICT.get(out_final)})
+                final_dict.update(
+                    {f"{category}": FINAL_LABEL_TO_VALUE_DICT.get(out_final)}
+                )
         return final_dict
 
     def combine_all(self):
@@ -99,7 +102,7 @@ class Prediction:
             reviews_list=data_dict.values(),
             candidates_labels=list(data_dict.keys()),
         )
-        print(f'=== final_dict ====')
+        print(f"=== final_dict ====")
         print(final_dict)
         to_save_csv(
             all_reviews=final_dict,

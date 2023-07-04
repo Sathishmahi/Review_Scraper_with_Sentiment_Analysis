@@ -2,6 +2,7 @@ import requests
 import uuid
 import os
 import time
+import string
 import pandas as pd
 from tqdm import tqdm
 from bs4 import BeautifulSoup as bs
@@ -22,11 +23,9 @@ extract_product_csv_file_name = data_ingestion_config.extract_product_csv_file_n
 wait = WAIT
 
 
-def to_save_img(all_img_links: list[str],image_name_list:list[str]):
-    for li,img_name in zip(all_img_links,image_name_list):
-        with open(
-            os.path.join(extract_image_dir_name, f"{img_name}.jpg"), "wb"
-        ) as img:
+def to_save_img(all_img_links: list[str], image_name_list: list[str]):
+    for li, img_name in zip(all_img_links, image_name_list):
+        with open(os.path.join(extract_image_dir_name, f"{img_name}.jpg"), "wb") as img:
             with uReq(li) as req:
                 img.write(req.read())
         time.sleep(wait)
@@ -107,15 +106,19 @@ def toExtractImage_etc(html_con) -> dict:
         EXTRACT_PRODUCT_COLUMNS_NAME[5]: all_product_offer_list,
         EXTRACT_PRODUCT_COLUMNS_NAME[6]: free_delivery_list,
     }
-    image_name_list=[img_name.replace(" ","_").replace(",","_").replace("(","").replace(")","") for img_name in model_name_list]
-    to_save_img(all_img_links=image_urls_list,image_name_list=image_name_list)
+    image_name_list = [
+        img_name.replace(" ", "_").replace(",", "_").replace("(", "").replace(")", "")
+        for img_name in model_name_list
+    ]
+    to_save_img(all_img_links=image_urls_list, image_name_list=image_name_list)
     return final_dict
-    
 
 
 def toExtractReviewsSingle(
     searchString: str, configuration=Configuration()
 ) -> DataIngestionConfig:
+    all_special_cher = [*string.punctuation, " "]
+    searchString = "".join([c for c in searchString if c not in all_special_cher])
     searchString = searchString.replace(" ", "").replace("-", "")
     flipkart_url = "https://www.flipkart.com/search?q=" + searchString
     uClient = uReq(flipkart_url)

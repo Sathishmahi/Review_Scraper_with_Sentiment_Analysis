@@ -4,23 +4,23 @@ stages:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/data_ingestion_single.py
     deps:
     - path: src/ReviewScraperwithSentimentAnalysis/components/data_ingestion_single.py
-      md5: 67be191ea4e74e3ddad721f58a92451d
-      size: 6356
+      md5: 0d25907c0c84b838ef328ce5f2c35d4f
+      size: 6498
     - path: src/ReviewScraperwithSentimentAnalysis/utils
       md5: 511798724b249d2e48fa923fec64488b.dir
       size: 8316
       nfiles: 8
     outs:
     - path: artifact/data_ingestion
-      md5: 45f2de10839abf82d1d59f3a0786d321.dir
+      md5: d0778024b157d1c5bc8b6703160b6b9d.dir
       size: 167874
       nfiles: 16
   data_preprocessing:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/text_preprocessing.py
     deps:
     - path: artifact/data_ingestion/review.csv
-      md5: fa605072a71bf9dcb1c3f389f93e1cbc
-      size: 2960
+      md5: c92c699318df809baba19c0ce6ed8646
+      size: 3405
     - path: src/ReviewScraperwithSentimentAnalysis/components/text_preprocessing.py
       md5: c2d23c1a6adcb8cca8df3d46793a8334
       size: 2771
@@ -30,8 +30,8 @@ stages:
       nfiles: 8
     outs:
     - path: artifact/text_preprocessing
-      md5: 1ca89a5f5ab18dac83572cab64020ca6.dir
-      size: 2701
+      md5: 177fb4eb96f7b9494f0b1d2335d44d21.dir
+      size: 3094
       nfiles: 1
   download_pretrain_model:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/hugging_face_pretrained.py
@@ -52,8 +52,8 @@ stages:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
     deps:
     - path: artifact/data_ingestion/review.csv
-      md5: fa605072a71bf9dcb1c3f389f93e1cbc
-      size: 2960
+      md5: c92c699318df809baba19c0ce6ed8646
+      size: 3405
     - path: src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
       md5: f0f464b198d11c74514c04df780e6580
       size: 4521
@@ -63,8 +63,8 @@ stages:
       nfiles: 8
     outs:
     - path: artifact/review_split
-      md5: 536d0655058a6a5155697dfad77a00a3.dir
-      size: 8404
+      md5: da6e9d8e0468873cfc619407fdd09cc1.dir
+      size: 8912
       nfiles: 4
   prediction:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/prediction.py
@@ -74,18 +74,18 @@ stages:
       size: 1425369542
       nfiles: 7
     - path: artifact/review_split
-      md5: 536d0655058a6a5155697dfad77a00a3.dir
-      size: 8404
+      md5: da6e9d8e0468873cfc619407fdd09cc1.dir
+      size: 8912
       nfiles: 4
     - path: src/ReviewScraperwithSentimentAnalysis/components/prediction.py
-      md5: 3084be1f8fcb6b4eb15b39a893d0a434
-      size: 4317
+      md5: 098d046114ef74c0357d2c89ec7ea69a
+      size: 4372
     - path: src/ReviewScraperwithSentimentAnalysis/utils
       md5: 511798724b249d2e48fa923fec64488b.dir
       size: 8316
       nfiles: 8
     outs:
     - path: artifact/prediction
-      md5: d751713988987e9331980363e24189ce.dir
-      size: 0
-      nfiles: 0
+      md5: 2337b5f098cd234944691f638d4ec27d.dir
+      size: 104
+      nfiles: 1

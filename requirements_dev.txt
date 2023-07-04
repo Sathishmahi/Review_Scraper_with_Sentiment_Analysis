@@ -1,8 +1,12 @@
-pytest
 bs4
 tensorflow
+transformers
 streamlit
 nltk
 Pyyaml
 pandas
+sklearn
+thefuzz
+python-Levenshtein
+black
 -e .

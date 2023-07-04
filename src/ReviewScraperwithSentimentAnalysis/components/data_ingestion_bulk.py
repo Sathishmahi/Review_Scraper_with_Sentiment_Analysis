@@ -19,13 +19,12 @@ class ToExtractReviewsBulk:
         df = pd.DataFrame(all_reviews_list, columns=columns_name)
         df.to_csv(file_path, index=None)
 
-    def to_return_html_content(self, content_url:str):
+    def to_return_html_content(self, content_url: str):
         uClient_demo = uReq(content_url)
         raw_content = uClient_demo.read()
         html_content = bs(raw_content, "html.parser")
         uClient_demo.close()
         return html_content
-
 
     def to_extract_front_page_details(self, front_page_url):
         classes_id = ["_1fQZEK", "_2rpwqI"]
@@ -61,7 +60,7 @@ class ToExtractReviewsBulk:
             + html_content.findAll("a", {"class": next_page_url_class_id})[0]["href"]
         )
 
-    def to_fetch_all_reviews(self, content_url,limit:int=100):
+    def to_fetch_all_reviews(self, content_url, limit: int = 100):
         next_url_list = []
         final_all_reviews = self.to_extract_single_page_reviews(content_url)
         html_content = self.to_return_html_content(content_url)
@@ -70,7 +69,6 @@ class ToExtractReviewsBulk:
             "div", {"class": no_of_times_run_class_id}
         )[0].span.text.split()[-1]
         for idx in tqdm(range(1, int(no_of_times_run))):
-
             next_url_list.append(content_url)
             all_reviews = self.to_extract_single_page_reviews(content_url)
             content_url_list = []
@@ -85,17 +83,17 @@ class ToExtractReviewsBulk:
                 break
         return final_all_reviews, next_url_list
 
-    def combine_all(self,limit:int=100):
+    def combine_all(self, limit: int = 100):
         all_reviews = []
         all_review_page_link_li = []
         front_page_url = self.flipkart_url
         all_front_page_link = self.to_extract_front_page_details(front_page_url)
-        for link in tqdm(all_front_page_link,desc="to extract reviews"):
+        for link in tqdm(all_front_page_link, desc="to extract reviews"):
             all_review_page_link = self.to_featch_all_review_page_link(link)
             all_review_page_link_li.append(all_review_page_link)
-            rev, next_url = self.to_fetch_all_reviews(all_review_page_link,limit=limit)
+            rev, next_url = self.to_fetch_all_reviews(all_review_page_link, limit=limit)
             all_reviews.append(rev)
-            if len(all_reviews[0])>limit:
+            if len(all_reviews[0]) > limit:
                 break
             # print(all_reviews)
         self.to_save_csv(
@@ -106,6 +104,6 @@ class ToExtractReviewsBulk:
         return next_url
 
 
-if __name__=="__main__":
-    data_ingestion_bulk=ToExtractReviewsBulk(product_name="iphone14")
+if __name__ == "__main__":
+    data_ingestion_bulk = ToExtractReviewsBulk(product_name="iphone14")
     data_ingestion_bulk.combine_all(10000)

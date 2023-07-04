@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
-path="/config/workspace/artifact/data_ingestion/extract_product.csv"
-df=pd.read_csv(path)
+
+path = "/config/workspace/artifact/data_ingestion/extract_product.csv"
+df = pd.read_csv(path)
 # st.title('A title with _italics_ :blue[colors] and emojis :sunglasses:')
 # st.markdown(df.to_html(render_links=True),unsafe_allow_html=True)
 # st.dataframe(df)
@@ -20,7 +21,6 @@ df=pd.read_csv(path)
 #             file_name="flower.png",
 #             mime="image/png"
 #           )
-
 
 
 st.write(df.to_html(escape=False, index=False), unsafe_allow_html=True)
