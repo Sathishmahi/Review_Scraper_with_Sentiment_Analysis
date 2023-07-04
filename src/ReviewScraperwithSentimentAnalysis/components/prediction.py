@@ -78,12 +78,19 @@ class Prediction:
         model = self.load_model(model_path)
         for review_list, candidate_labels in zip(reviews_list, candidates_labels):
             out = model(review_list[0], candidate_labels=list(candidate_labels))
+            print(f"======= out {out}")
             final_li = [
                 result.get("labels")[np.argmax(result["scores"])] for result in out
             ]
+
+            print(f"======= final_li {final_li}")
             out_final = self.to_return_max_prob(analysis_list=final_li)
-            category = candidate_labels[0].split(" ")[1]
-            final_dict.update({f"{category}": FINAL_LABEL_TO_VALUE_DICT.get(out_final)})
+            print(f"======= out_final {out_final}")
+            print("==================",candidate_labels)
+            # category = candidate_labels[0].split(" ")[1]
+            if len(candidate_labels[0].split(" "))>1:
+                category = candidate_labels[0].split(" ")[1]
+                final_dict.update({f"{category}": FINAL_LABEL_TO_VALUE_DICT.get(out_final)})
         return final_dict
 
     def combine_all(self):

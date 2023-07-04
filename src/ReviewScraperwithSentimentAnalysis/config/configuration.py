@@ -122,7 +122,7 @@ class Configuration:
             root_dir=root_dir,
             splited_reviews_dir_path=splited_reviews_dir_path,
             pretrain_model_path=pretrain_model_path,
-            predeiction_csv_file_path=predeiction_csv_file_path,
+            prediction_csv_file_path=predeiction_csv_file_path,
         )
 
         return prediction_config

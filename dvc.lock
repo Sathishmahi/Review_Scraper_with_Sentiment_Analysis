@@ -15,3 +15,77 @@ stages:
       md5: 25fa86ccf3f3ab10c8722c10cb90662b.dir
       size: 230019
       nfiles: 26
+  data_preprocessing:
+    cmd: python src/ReviewScraperwithSentimentAnalysis/components/text_preprocessing.py
+    deps:
+    - path: artifact/data_ingestion/review.csv
+      md5: 1f3bbb569ca6dd3a06940015a3a93343
+      size: 2535
+    - path: src/ReviewScraperwithSentimentAnalysis/components/text_preprocessing.py
+      md5: c2d23c1a6adcb8cca8df3d46793a8334
+      size: 2771
+    - path: src/ReviewScraperwithSentimentAnalysis/utils
+      md5: 511798724b249d2e48fa923fec64488b.dir
+      size: 8316
+      nfiles: 8
+    outs:
+    - path: artifact/text_preprocessing
+      md5: e08691a313f24fc81bbce360107ef60f.dir
+      size: 2272
+      nfiles: 1
+  download_pretrain_model:
+    cmd: python src/ReviewScraperwithSentimentAnalysis/components/hugging_face_pretrained.py
+    deps:
+    - path: src/ReviewScraperwithSentimentAnalysis/components/hugging_face_pretrained.py
+      md5: 9b261aeae0205880ed1fa2a75392c7e8
+      size: 904
+    - path: src/ReviewScraperwithSentimentAnalysis/utils
+      md5: 511798724b249d2e48fa923fec64488b.dir
+      size: 8316
+      nfiles: 8
+    outs:
+    - path: artifact/pretrained_model
+      md5: 85b63502aa3deaa1fe8fb639505e10e0.dir
+      size: 1425369542
+      nfiles: 7
+  split_reviews:
+    cmd: python src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
+    deps:
+    - path: artifact/data_ingestion/review.csv
+      md5: 1f3bbb569ca6dd3a06940015a3a93343
+      size: 2535
+    - path: src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
+      md5: f0f464b198d11c74514c04df780e6580
+      size: 4521
+    - path: src/ReviewScraperwithSentimentAnalysis/utils
+      md5: 511798724b249d2e48fa923fec64488b.dir
+      size: 8316
+      nfiles: 8
+    outs:
+    - path: artifact/review_split
+      md5: 08f480c8a3524d889e0afd0ada39c973.dir
+      size: 7537
+      nfiles: 4
+  prediction:
+    cmd: python src/ReviewScraperwithSentimentAnalysis/components/prediction.py
+    deps:
+    - path: artifact/pretrained_model
+      md5: 85b63502aa3deaa1fe8fb639505e10e0.dir
+      size: 1425369542
+      nfiles: 7
+    - path: artifact/review_split
+      md5: 08f480c8a3524d889e0afd0ada39c973.dir
+      size: 7537
+      nfiles: 4
+    - path: src/ReviewScraperwithSentimentAnalysis/components/prediction.py
+      md5: 340e1d48527ca835180094733e0e95d8
+      size: 4408
+    - path: src/ReviewScraperwithSentimentAnalysis/utils
+      md5: 511798724b249d2e48fa923fec64488b.dir
+      size: 8316
+      nfiles: 8
+    outs:
+    - path: artifact/prediction
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0

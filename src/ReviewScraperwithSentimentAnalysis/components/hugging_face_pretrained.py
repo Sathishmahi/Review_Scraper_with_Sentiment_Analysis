@@ -23,6 +23,6 @@ class PreTrained:
         self.save_model(model=model, save_model_path=save_model_path)
 
 
-if __name_ == "__main__":
+if __name__ == "__main__":
     pretrain = PreTrained()
     pretrain.combine_all()
