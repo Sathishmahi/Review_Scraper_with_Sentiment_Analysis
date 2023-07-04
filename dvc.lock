@@ -19,8 +19,8 @@ stages:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/text_preprocessing.py
     deps:
     - path: artifact/data_ingestion/review.csv
-      md5: c92c699318df809baba19c0ce6ed8646
-      size: 3405
+      md5: 5af6614042fd8773a2e0164683d866d3
+      size: 2935
     - path: src/ReviewScraperwithSentimentAnalysis/components/text_preprocessing.py
       md5: c2d23c1a6adcb8cca8df3d46793a8334
       size: 2771
@@ -30,8 +30,8 @@ stages:
       nfiles: 8
     outs:
     - path: artifact/text_preprocessing
-      md5: 177fb4eb96f7b9494f0b1d2335d44d21.dir
-      size: 3094
+      md5: df64318f24db61fad5140dec01d00cc7.dir
+      size: 2363
       nfiles: 1
   download_pretrain_model:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/hugging_face_pretrained.py
@@ -52,8 +52,8 @@ stages:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
     deps:
     - path: artifact/data_ingestion/review.csv
-      md5: c92c699318df809baba19c0ce6ed8646
-      size: 3405
+      md5: 5af6614042fd8773a2e0164683d866d3
+      size: 2935
     - path: src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
       md5: f0f464b198d11c74514c04df780e6580
       size: 4521
@@ -63,8 +63,8 @@ stages:
       nfiles: 8
     outs:
     - path: artifact/review_split
-      md5: da6e9d8e0468873cfc619407fdd09cc1.dir
-      size: 8912
+      md5: 2cd7b1e5a802fae382974a5e46e3644e.dir
+      size: 7281
       nfiles: 4
   prediction:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/prediction.py
@@ -74,8 +74,8 @@ stages:
       size: 1425369542
       nfiles: 7
     - path: artifact/review_split
-      md5: da6e9d8e0468873cfc619407fdd09cc1.dir
-      size: 8912
+      md5: 536d0655058a6a5155697dfad77a00a3.dir
+      size: 8404
       nfiles: 4
     - path: src/ReviewScraperwithSentimentAnalysis/components/prediction.py
       md5: 098d046114ef74c0357d2c89ec7ea69a
@@ -86,6 +86,6 @@ stages:
       nfiles: 8
     outs:
     - path: artifact/prediction
-      md5: 2337b5f098cd234944691f638d4ec27d.dir
-      size: 104
+      md5: 71ea66d1d5c987f1e98fb6ac7d9c6dda.dir
+      size: 101
       nfiles: 1
