@@ -19,7 +19,7 @@ prediction_csv_file_path = (
 extract_product_csv_file_path=data_ingestion_config=Configuration().get_data_ingestion_config().extract_product_csv_file_name
 review_csv_file_path=data_ingestion_config=Configuration().get_data_ingestion_config().review_file_path
 
-read_csv_encode=lambda fp: pd.read_csv(fp).encode("utf-8")
+read_csv_encode=lambda fp: pd.read_csv(fp)
 
 if is_click:
     try:
@@ -55,7 +55,8 @@ if is_click:
     df_extract=pd.read_csv(extract_product_csv_file_path)
     df_extract=df_extract.drop_duplicates()
     df_extract[EXTRACT_PRODUCT_COLUMNS_NAME[0]]=df_extract[EXTRACT_PRODUCT_COLUMNS_NAME[0]].apply(lambda url:f'<a href="{url}" target="_blank">{url}</a>')
-    st.markdown(df_extract,unsafe_allow_html=True).to_markdown()
+    df_extract=df_extract.to_markdown()
+    st.markdown(df_extract,unsafe_allow_html=True)
     
  
     df_pre=read_csv_encode(prediction_csv_file_path)
