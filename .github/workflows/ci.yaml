@@ -1,10 +1,10 @@
-name: ReviewScraper application
+name: ReviewScraper Application
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
 
 permissions:
   contents: read
