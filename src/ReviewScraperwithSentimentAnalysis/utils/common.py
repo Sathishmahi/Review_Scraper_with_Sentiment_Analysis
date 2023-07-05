@@ -27,9 +27,9 @@ def make_dirs(dirs_list: list, log_or_not=True):
 
 
 def read_yaml(yaml_file_path: Path = Path(CONFIG_FILE_PATH)) -> dict:
+    if not os.path.exists(yaml_file_path):
+        raise FileNotFoundError(f"yaml file not found {yaml_file_path}")
     try:
-        if not os.path.exists(yaml_file_path):
-            raise FileNotFoundError("file not found")
         with open(yaml_file_path) as yaml_file:
             return yaml.safe_load(yaml_file)
     except Exception as e:
@@ -40,7 +40,7 @@ def to_dataframe(data_dict: dict):
     return pd.DataFrame(data=data_dict)
 
 
-def to_save_csv(all_reviews, file_path: str, columns_name: list = None, index=None):
+def to_save_csv(all_reviews, file_path: str, columns_name: list = [None], index=None):
     if isinstance(all_reviews, pd.DataFrame):
         all_reviews.to_csv(file_path, index=False)
     if isinstance(all_reviews, list):
@@ -51,7 +51,7 @@ def to_save_csv(all_reviews, file_path: str, columns_name: list = None, index=No
 
 
 def to_save_pkl(
-    contents: list[list], file_paths: Path, columns_name: list[str] = ["column_1"]
+    contents: list[list], file_paths: list[Path], columns_name: list[str] = ["column_1"]
 ):
     for content, file_path, column_name in zip(contents, file_paths, columns_name):
         data = None

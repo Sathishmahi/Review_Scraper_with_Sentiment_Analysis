@@ -32,7 +32,7 @@ class TextPreprocessing:
         return df
 
     def to_remove_stop_punctuation(
-        self, df: pd.DataFrame, min_review_len: int
+        self, df: pd.DataFrame, min_review_len: int = 5
     ) -> pd.DataFrame:
         all_punctuation = string.punctuation
         df[COLUMNS_NAME[0]] = df[COLUMNS_NAME[0]].str.lower()

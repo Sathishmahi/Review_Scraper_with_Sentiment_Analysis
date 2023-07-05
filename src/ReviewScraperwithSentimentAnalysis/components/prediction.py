@@ -28,7 +28,7 @@ class Prediction:
             list_dirs, [OVERALL_LABELS, BATTERY_LABELS, CAMERA_LABELS, DISPLAY_LABELS]
         ):
             combine_pkl_file_path = os.path.join(splited_reviews_dir_path, pkl_path)
-            data_series = to_load_pkl(pkl_file_path=combine_pkl_file_path)
+            data_series = to_load_pkl(pkl_file_path=Path(combine_pkl_file_path))
             final_dict.update({tuple(labels): data_series.to_list()})
         return final_dict
 

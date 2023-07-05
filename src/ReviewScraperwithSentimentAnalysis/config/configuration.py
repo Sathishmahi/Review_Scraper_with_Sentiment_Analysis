@@ -24,6 +24,7 @@ from ReviewScraperwithSentimentAnalysis.entity import (
 class Configuration:
     def __init__(self):
         self.config_content = read_yaml()
+        # PARAMS_FILE_PATH="/config/workspace/params.yaml"
         self.params_content = read_yaml(yaml_file_path=PARAMS_FILE_PATH)
         self.artifact_dir_name = ARTIFACT_DIR_NAME
         make_dirs([self.artifact_dir_name])
@@ -141,7 +142,6 @@ class Configuration:
             root_dir,
             review_split_content.get(ReviewSplitConstant.ReviewSplit_DIR_NAME_KEY),
         )
-        print(review_split_dir_path)
         battery_file_path = os.path.join(
             review_split_dir_path,
             review_split_content.get(

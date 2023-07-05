@@ -8,6 +8,7 @@ from tqdm import tqdm
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen as uReq
 from ReviewScraperwithSentimentAnalysis.entity import DataIngestionConfig
+from ReviewScraperwithSentimentAnalysis import logging
 from ReviewScraperwithSentimentAnalysis.config import Configuration
 from ReviewScraperwithSentimentAnalysis.constant import (
     COLUMNS_NAME,
@@ -116,7 +117,7 @@ def toExtractImage_etc(html_con) -> dict:
 
 def toExtractReviewsSingle(
     searchString: str, configuration=Configuration()
-) -> DataIngestionConfig:
+) -> None:
     all_special_cher = [*string.punctuation, " "]
     searchString = "".join([c for c in searchString if c not in all_special_cher])
     searchString = searchString.replace(" ", "").replace("-", "")

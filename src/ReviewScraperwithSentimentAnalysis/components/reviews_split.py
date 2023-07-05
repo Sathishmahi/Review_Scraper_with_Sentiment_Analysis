@@ -2,6 +2,7 @@ from ReviewScraperwithSentimentAnalysis.config import Configuration
 import pandas as pd
 from tqdm import tqdm
 from pathlib import Path
+from typing import Any
 from ReviewScraperwithSentimentAnalysis import logging
 import os
 from thefuzz import fuzz
@@ -21,7 +22,7 @@ STAGE_NAME = "REVIEWS SPLIT"
 
 class SplitReviews:
     def __init__(self, configuration=Configuration()) -> None:
-        self.camera_list, self.display_list, self.battery_list, self.overall_list = (
+        self.camera_list, self.display_list , self.battery_list, self.overall_list = (
             [],
             [],
             [],
@@ -54,7 +55,7 @@ class SplitReviews:
         self.updated_list(combine_reviews_list=comma_list + full_list)
 
     @staticmethod
-    def to_split_comma_full(review_list: list[str]) -> tuple[list]:
+    def to_split_comma_full(review_list: list[str]) -> tuple[list[Any]]:
         com_li, full_li = [], []
         nothing = [
             (com_li.append(review.split(",")), full_li.append(review.split(".")))
@@ -74,7 +75,7 @@ class SplitReviews:
             else:
                 self.overall_list.append(review)
 
-    def updated_list(self, combine_reviews_list: list[str]) -> tuple[list]:
+    def updated_list(self, combine_reviews_list: list[str]) -> None:
         for review in combine_reviews_list:
             self._helper_updated_list(review=review)
 
@@ -88,7 +89,7 @@ class SplitReviews:
             for j in duplicate_review_list_copy:
                 if i != j and fuzz.partial_ratio(i, j) > similarity_score:
                     try:
-                        duplicate_review_list_copy.remove(removed_sen)
+                        duplicate_review_list_copy.remove(j)
                     except:
                         pass
 
