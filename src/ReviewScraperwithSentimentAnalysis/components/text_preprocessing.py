@@ -19,6 +19,7 @@ stem = PorterStemmer()
 
 STAGE_NAME = "TextPreprocessing"
 
+
 class TextPreprocessing:
     def __init__(self, Configuration=Configuration()):
         self.text_preprocessing_config = Configuration.get_text_preprocessing_config()
@@ -76,7 +77,9 @@ class TextPreprocessing:
         min_review_len = self.text_preprocessing_config.min_review_len
         df = pd.read_csv(csv_path)
         df = self.to_remove_stop_punctuation(df, min_review_len=min_review_len)
-        logging.info(f" after preprocess the data , dataset save into {self.processed_data_file_path}")
+        logging.info(
+            f" after preprocess the data , dataset save into {self.processed_data_file_path}"
+        )
         self.to_save_csv(df=df, file_path=self.processed_data_file_path)
 
 

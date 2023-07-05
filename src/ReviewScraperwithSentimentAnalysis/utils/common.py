@@ -39,25 +39,27 @@ def read_yaml(yaml_file_path: Path = Path(CONFIG_FILE_PATH)) -> dict:
 
 def to_dataframe(data_dict: dict):
     if not isinstance(data_dict, dict):
-        raise ValueError(f'must be data type is dict you passed {type(data_dict)} ')
+        raise ValueError(f"must be data type is dict you passed {type(data_dict)} ")
     return pd.DataFrame(data=data_dict)
 
 
-def to_save_csv(all_reviews: Any, file_path: str, columns_name: list = [None], index=None):
-
+def to_save_csv(
+    all_reviews: Any, file_path: str, columns_name: list = [None], index=None
+):
     try:
-
         if isinstance(all_reviews, pd.DataFrame):
             all_reviews.to_csv(file_path, index=False)
         elif isinstance(all_reviews, dict):
-            df=pd.DataFrame(data=all_reviews)
-            df.to_csv(file_path,index=False)
-        elif isinstance(all_reviews[0], list | tuple ) and (isinstance(all_reviews, list | tuple)):
+            df = pd.DataFrame(data=all_reviews)
+            df.to_csv(file_path, index=False)
+        elif isinstance(all_reviews[0], list | tuple) and (
+            isinstance(all_reviews, list | tuple)
+        ):
             if not columns_name[0]:
-                columns_name=list(range(len(all_reviews)))
-            all_reviews={cn:data for cn,data in zip(columns_name,all_reviews)}
+                columns_name = list(range(len(all_reviews)))
+            all_reviews = {cn: data for cn, data in zip(columns_name, all_reviews)}
             df = pd.DataFrame(all_reviews, columns=columns_name)
-            df.to_csv(file_path,index=False)
+            df.to_csv(file_path, index=False)
         else:
             df = pd.DataFrame(all_reviews, index=index)
             df.to_csv(file_path, index=False)
@@ -81,4 +83,4 @@ def to_save_pkl(
                     f"to_save_pkl content only allowed list not {type(content)} or columns list length  mustbe  equal to contents list"
                 )
     except Exception as e:
-        raise e 
+        raise e

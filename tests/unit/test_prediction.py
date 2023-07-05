@@ -2,9 +2,10 @@ from src.ReviewScraperwithSentimentAnalysis.components.prediction import Predict
 from src.ReviewScraperwithSentimentAnalysis.config.configuration import Configuration
 import os
 
-c=Configuration()
-prediciton_config=c.get_prediciton_config()
-prediction_csv_file_path=prediciton_config.prediction_csv_file_path
+c = Configuration()
+prediciton_config = c.get_prediciton_config()
+prediction_csv_file_path = prediciton_config.prediction_csv_file_path
+
 
 def test_prediction():
     prediction = Prediction()

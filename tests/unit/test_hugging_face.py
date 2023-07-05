@@ -1,13 +1,15 @@
 import os
-from src.ReviewScraperwithSentimentAnalysis.components.hugging_face_pretrained import PreTrained
+from src.ReviewScraperwithSentimentAnalysis.components.hugging_face_pretrained import (
+    PreTrained,
+)
 from src.ReviewScraperwithSentimentAnalysis.config.configuration import Configuration
 
-c=Configuration()
-pretrained_config=c.get_pretrained_config()
+c = Configuration()
+pretrained_config = c.get_pretrained_config()
+
 
 def test_huggingface():
-    
-    p=PreTrained()
+    p = PreTrained()
     p.combine_all()
     save_model_path = pretrained_config.pretrained_model_dir
 

@@ -14,7 +14,9 @@ from transformers import pipeline
 # import pandas as pd
 import numpy as np
 from pathlib import Path
-STAGE_NAME="Prediction"
+
+STAGE_NAME = "Prediction"
+
 
 class Prediction:
     def __init__(self, configuration=Configuration()) -> None:

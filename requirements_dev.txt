@@ -10,6 +10,7 @@ thefuzz
 python-Levenshtein
 black
 tox
+pytest
 flake8
 mypy
 -e .

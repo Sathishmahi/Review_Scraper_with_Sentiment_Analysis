@@ -22,7 +22,7 @@ STAGE_NAME = "REVIEWS SPLIT"
 
 class SplitReviews:
     def __init__(self, configuration=Configuration()) -> None:
-        self.camera_list, self.display_list , self.battery_list, self.overall_list = (
+        self.camera_list, self.display_list, self.battery_list, self.overall_list = (
             [],
             [],
             [],

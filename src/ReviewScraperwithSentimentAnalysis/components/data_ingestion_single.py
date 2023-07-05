@@ -24,6 +24,7 @@ extract_product_csv_file_name = data_ingestion_config.extract_product_csv_file_n
 wait = WAIT
 STAGE_NAME = "toExtractReviewsSingle"
 
+
 def to_save_img(all_img_links: list[str], image_name_list: list[str]):
     for li, img_name in zip(all_img_links, image_name_list):
         with open(os.path.join(extract_image_dir_name, f"{img_name}.jpg"), "wb") as img:
@@ -115,9 +116,7 @@ def toExtractImage_etc(html_con) -> dict:
     return final_dict
 
 
-def toExtractReviewsSingle(
-    searchString: str, configuration=Configuration()
-) -> None:
+def toExtractReviewsSingle(searchString: str, configuration=Configuration()) -> None:
     all_special_cher = [*string.punctuation, " "]
     searchString = "".join([c for c in searchString if c not in all_special_cher])
     searchString = searchString.replace(" ", "").replace("-", "")
