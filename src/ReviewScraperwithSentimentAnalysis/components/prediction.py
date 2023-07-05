@@ -29,6 +29,7 @@ class Prediction:
         ):
             combine_pkl_file_path = os.path.join(splited_reviews_dir_path, pkl_path)
             data_series = to_load_pkl(pkl_file_path=Path(combine_pkl_file_path))
+            # col=data_series.columns[0]
             final_dict.update({tuple(labels): data_series.to_list()})
         return final_dict
 

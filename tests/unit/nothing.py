@@ -1,6 +1,6 @@
 from ReviewScraperwithSentimentAnalysis.config.configuration import Configuration
 from ReviewScraperwithSentimentAnalysis.entity.config_entity import *
-
+import os
 c=Configuration()
 
 all_expected_out=[DataIngestionConfig(root_dir='artifact/data_ingestion', review_file_path='artifact/data_ingestion/review.csv', extract_image_dir_name='artifact/data_ingestion/images', extract_product_csv_file_name='artifact/data_ingestion/extract_product.csv'), 
@@ -20,3 +20,5 @@ all_predicted_dtypes=all([isinstance(out,dt) for out,dt in zip(all_predicted_out
 
 print(all_predicted_out==all_expected_out)
 print(all_predicted_dtypes)
+
+# print(os.listdir())
