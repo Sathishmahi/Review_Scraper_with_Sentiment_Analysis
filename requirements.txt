@@ -5,7 +5,7 @@ streamlit
 nltk
 Pyyaml
 pandas
-sklearn
+scikit-learn
 thefuzz
 python-Levenshtein
 -e .

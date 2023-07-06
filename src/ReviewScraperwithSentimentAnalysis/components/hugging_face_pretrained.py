@@ -13,16 +13,58 @@ class PreTrained:
 
     @staticmethod
     def load_model(model_name: str):
-        logging.info(f" pretrained model name {model_name} ")
-        model = pipeline("zero-shot-classification", model_name)
-        return model
+        """
+        func to load the huggingface pretrain model
+
+        Args:
+            model_name (str): huggingface model name
+
+        Returns:
+            Model: to return pretrain huggingface zero-shot-classification model
+
+        raise:
+            Exception: base exception
+        """
+        try:
+
+            logging.info(f" pretrained model name {model_name} ")
+            model = pipeline("zero-shot-classification", model_name)
+            return model
+
+        except Exception as e:
+            logging.exception(msg=e)
+            raise e
 
     @staticmethod
-    def save_model(model, save_model_path: Path):
-        logging.info(f" pretrained model save into {save_model_path} ")
-        model.save_pretrained(save_model_path)
+    def save_model(model, save_model_path: Path)->None:
+        """
+        this func to save the pretrain HF zero-shot-classification model
 
-    def combine_all(self):
+        Args:
+            model Model: pretrain model
+            save_model_path (Path): save model path
+        Return: 
+            None
+
+        raise:
+            Exception: base exception
+        """
+        try:
+            logging.info(f" pretrained model save into {save_model_path} ")
+            model.save_pretrained(save_model_path)
+        except Exception as e:
+            logging.exception(msg=e)
+            raise e
+
+    def combine_all(self)->None:
+        """
+        this func to combine all functions
+
+        Return:
+            None
+        raise:
+            Exception: base exception
+        """
         model_name = self.pretrained_config.pretrained_model_name
         save_model_path = self.pretrained_config.pretrained_model_dir
         if not len(os.listdir(save_model_path)):

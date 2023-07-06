@@ -12,6 +12,6 @@ root_dir = os.path.split(review_file_path)[0]
 
 def test_review_preprocessing():
     preprocess = TextPreprocessing()
-    preprocess.review_combine_all()
+    preprocess.combine_all()
 
     assert os.path.exists(review_file_path)
