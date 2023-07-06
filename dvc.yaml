@@ -16,13 +16,13 @@ stages:
     outs:
       - artifact/text_preprocessing
 
-  download_pretrain_model:
-    cmd: python src/ReviewScraperwithSentimentAnalysis/components/hugging_face_pretrained.py
-    deps:
-      - src/ReviewScraperwithSentimentAnalysis/components/hugging_face_pretrained.py
-      - src/ReviewScraperwithSentimentAnalysis/utils
-    outs:
-      - artifact/pretrained_model
+  # download_pretrain_model:
+  #   cmd: python src/ReviewScraperwithSentimentAnalysis/components/hugging_face_pretrained.py
+  #   deps:
+  #     - src/ReviewScraperwithSentimentAnalysis/components/hugging_face_pretrained.py
+  #     - src/ReviewScraperwithSentimentAnalysis/utils
+  #   outs:
+  #     - artifact/pretrained_model
 
   split_reviews:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
@@ -38,7 +38,7 @@ stages:
     deps:
       - src/ReviewScraperwithSentimentAnalysis/components/prediction.py
       - src/ReviewScraperwithSentimentAnalysis/utils
-      - artifact/pretrained_model
+      - pretrained_model
       - artifact/review_split
     outs:
       - artifact/prediction
