@@ -26,7 +26,6 @@ class PreTrained:
             Exception: base exception
         """
         try:
-
             logging.info(f" pretrained model name {model_name} ")
             model = pipeline("zero-shot-classification", model_name)
             return model
@@ -36,14 +35,14 @@ class PreTrained:
             raise e
 
     @staticmethod
-    def save_model(model, save_model_path: Path)->None:
+    def save_model(model, save_model_path: Path) -> None:
         """
         this func to save the pretrain HF zero-shot-classification model
 
         Args:
             model Model: pretrain model
             save_model_path (Path): save model path
-        Return: 
+        Return:
             None
 
         raise:
@@ -56,7 +55,7 @@ class PreTrained:
             logging.exception(msg=e)
             raise e
 
-    def combine_all(self)->None:
+    def combine_all(self) -> None:
         """
         this func to combine all functions
 

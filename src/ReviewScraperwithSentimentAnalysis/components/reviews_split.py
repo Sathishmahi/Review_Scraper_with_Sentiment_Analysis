@@ -12,7 +12,7 @@ from ReviewScraperwithSentimentAnalysis.constant import (
     CAMERA_LABELS,
     BATTERY_LABELS,
     DISPLAY_LABELS,
-    SPLIT_REVIES_COLUMNS_NAME
+    SPLIT_REVIES_COLUMNS_NAME,
 )
 
 from ReviewScraperwithSentimentAnalysis.utils import to_save_pkl
@@ -26,12 +26,14 @@ class SplitReviews:
             [],
             [],
             [],
-            []
+            [],
         )
         self.review_split_config = configuration.get_review_split_config()
 
     @staticmethod
-    def to_read_csv(csv_file_path: Path, specific_column: list[str] = [None])->pd.DataFrame:
+    def to_read_csv(
+        csv_file_path: Path, specific_column: list[str] = [None]
+    ) -> pd.DataFrame:
         """
         this func to read the csv file
 
@@ -40,8 +42,8 @@ class SplitReviews:
             specific_column (list[str], optional): _description_. Defaults to [None].
 
         Raises:
-            FileNotFoundError: to raise FileNotFoundError if csv file not found 
-            ValueError: to raise ValueError if column name not present in dataframe 
+            FileNotFoundError: to raise FileNotFoundError if csv file not found
+            ValueError: to raise ValueError if column name not present in dataframe
             Exception: base exception
 
         Returns:
@@ -57,13 +59,12 @@ class SplitReviews:
             except ValueError as e:
                 raise ValueError("columns not found")
         try:
-
             df = pd.read_csv(csv_file_path)
             return df
 
         except Exception as e:
             raise e
-    
+
     def to_split_reviews(self) -> None:
         """
         this func to  split the reviews into multiple part for example to split into commas(,) and full stop(.)
@@ -72,7 +73,7 @@ class SplitReviews:
             None
 
         raise:
-            Exception: base exception 
+            Exception: base exception
 
         """
         try:
@@ -93,10 +94,10 @@ class SplitReviews:
         helper function of to_split_reviews function
 
         Args:
-            review_list (list[str]): full or raw extracted reviews list  
+            review_list (list[str]): full or raw extracted reviews list
 
         Returns:
-            tuple[list[Any]]: after split the review to return comma split list and full stop split list   
+            tuple[list[Any]]: after split the review to return comma split list and full stop split list
         """
         com_li, full_li = [], []
         nothing = [
@@ -108,19 +109,18 @@ class SplitReviews:
 
     def _helper_updated_list(self, review: str):
         """
-        this helper function this func to split the review based on keyword present in the review 
+        this helper function this func to split the review based on keyword present in the review
 
-        keywords: (display,battery,camera) 
+        keywords: (display,battery,camera)
 
         Args:
             review (str): raw review
 
         Raises:
-            Exception: base exception 
+            Exception: base exception
         """
-        
-        try:
 
+        try:
             if review:
                 if "camera" in review:
                     self.camera_list.append(review)
@@ -146,21 +146,23 @@ class SplitReviews:
     @staticmethod
     def to_remove_duplicates(
         duplicate_review_list: list[str], similarity_score: float = 75.0
-    )->list[str]:
+    ) -> list[str]:
         """
-        to remove duplicate reviews using fuzz lib 
+        to remove duplicate reviews using fuzz lib
 
         Args:
             duplicate_review_list (list[str]): raw reviews list
-            similarity_score (float, optional): similarity score for ex two sentence similarity score >= 75. 
+            similarity_score (float, optional): similarity score for ex two sentence similarity score >= 75.
             to remove the one of the review: Defaults to 75.0.
 
         Returns:
-            list[str]: after remove the dulplicate reviews list 
+            list[str]: after remove the dulplicate reviews list
         """
         try:
             duplicate_review_list_copy = duplicate_review_list.copy()
-            to_return_min_len = lambda sen1, sen2: sen1 if len(sen1) > len(sen2) else sen2
+            to_return_min_len = (
+                lambda sen1, sen2: sen1 if len(sen1) > len(sen2) else sen2
+            )
             for i in duplicate_review_list_copy:
                 for j in duplicate_review_list_copy:
                     if i != j and fuzz.partial_ratio(i, j) > similarity_score:
@@ -174,18 +176,17 @@ class SplitReviews:
             logging.exception(msg=e)
             raise e
 
-    def combine_all(self)->None:
+    def combine_all(self) -> None:
         """
         this func to combine all functions
 
         Return:
             None
-        
+
         raise:
             Exception: base exeception
         """
         try:
-
             self.to_split_reviews()
             battery_file_path = self.review_split_config.battery_file_name
             camera_file_path = self.review_split_config.camera_file_name
@@ -206,7 +207,9 @@ class SplitReviews:
                 self.to_remove_duplicates(self.camera_list),
             ]
             columns_name = SPLIT_REVIES_COLUMNS_NAME
-            to_save_pkl(contents=contents, file_paths=file_paths, columns_name=columns_name)
+            to_save_pkl(
+                contents=contents, file_paths=file_paths, columns_name=columns_name
+            )
 
         except Exception as e:
             raise e

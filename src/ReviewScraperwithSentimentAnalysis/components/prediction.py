@@ -39,18 +39,21 @@ class Prediction:
             e: base exception
         """
         if not os.path.exists(splited_reviews_dir_path):
-            e=FileNotFoundError(f" splited dir not found {splited_reviews_dir_path} ")
+            e = FileNotFoundError(f" splited dir not found {splited_reviews_dir_path} ")
             logging.exception(msg=e)
             raise e
         list_dirs = os.listdir(splited_reviews_dir_path)
         if not len(list_dirs):
-            e=ValueError(f" splited_reviews_dir is contanin atleast one item {splited_reviews_dir_path} ")
+            e = ValueError(
+                f" splited_reviews_dir is contanin atleast one item {splited_reviews_dir_path} "
+            )
             logging.exception(msg=e)
             raise e
         try:
             final_dict = dict()
             for pkl_path, labels in zip(
-                list_dirs, [OVERALL_LABELS, BATTERY_LABELS, CAMERA_LABELS, DISPLAY_LABELS]
+                list_dirs,
+                [OVERALL_LABELS, BATTERY_LABELS, CAMERA_LABELS, DISPLAY_LABELS],
             ):
                 combine_pkl_file_path = os.path.join(splited_reviews_dir_path, pkl_path)
                 data_series = to_load_pkl(pkl_file_path=Path(combine_pkl_file_path))
@@ -67,7 +70,9 @@ class Prediction:
             raise FileNotFoundError(f"model dir not found  {model_path}")
         try:
             model = pipeline("zero-shot-classification", model=model_path)
-            logging.info(msg=f" zero-shot-classification model path =====>  {model_path} ")
+            logging.info(
+                msg=f" zero-shot-classification model path =====>  {model_path} "
+            )
             return model
         except Exception as e:
             logging.exception(msg=e)
@@ -78,16 +83,16 @@ class Prediction:
         analysis_list: list[str], no_labels: int = 2, thersold: float = 0.1
     ) -> int:
         """
-        this func to return max prob result 
+        this func to return max prob result
         results:
             1-positive
             0-neutral
-            -1-negative 
+            -1-negative
 
         Args:
             analysis_list (list[str]): list contain good or bad based on review
             no_labels (int, optional): total of label in this case [good , bad]. Defaults to 2.
-            thersold (float, optional): diff between pos and negative review thersold 
+            thersold (float, optional): diff between pos and negative review thersold
             for ex pos_prob = 0.7 and neg_prob = 0.3 in this case (pos_prob - neg_prob)>thersold so return 1 .Defaults to 0.1.
 
         Returns:
@@ -121,7 +126,7 @@ class Prediction:
         candidates_labels: list[tuple[str]],
     ) -> dict:
         """
-        this func to predict the all reviews whether review pos or neg using pretrained NLP model 
+        this func to predict the all reviews whether review pos or neg using pretrained NLP model
 
         Args:
             model_path (Path): pretrained model path
@@ -141,7 +146,7 @@ class Prediction:
                 f"len candidates_labels and len reviews_list must be equal your reviews_list len is {len(reviews_list)} and candidates_labels len is {len(candidates_labels)} "
             )
         if not os.path.exists(model_path):
-            e=FileNotFoundError(f" pretrained  model file not found {model_path}")
+            e = FileNotFoundError(f" pretrained  model file not found {model_path}")
             logging.exception(msg=e)
             raise e
         try:
