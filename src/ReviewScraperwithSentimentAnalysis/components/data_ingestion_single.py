@@ -133,15 +133,21 @@ def toExtractImage_etc(html_con) -> dict:
             offerFun = lambda o: o[0].span.text if o else ""
             imageFun = lambda i: i[0]["src"] if i else ""
 
-            all_product_cost_list.append(costModelNameReviewFreeDeliveryFun(cost).replace(",",""))
-            all_product_offer_list.append(offerFun(offer).replace(",",""))
-            model_name_list.append(costModelNameReviewFreeDeliveryFun(model_name).replace(",",""))
-            over_all_reviews_list.append(
-                costModelNameReviewFreeDeliveryFun(over_all_review).replace(",","")
+            all_product_cost_list.append(
+                costModelNameReviewFreeDeliveryFun(cost).replace(",", "")
             )
-            image_urls_list.append(imageFun(image).replace(",",""))
-            free_delivery_list.append(costModelNameReviewFreeDeliveryFun(free_delivery).replace(",",""))
-            model_details_list.append(over_all_product_details.replace(",",""))
+            all_product_offer_list.append(offerFun(offer).replace(",", ""))
+            model_name_list.append(
+                costModelNameReviewFreeDeliveryFun(model_name).replace(",", "")
+            )
+            over_all_reviews_list.append(
+                costModelNameReviewFreeDeliveryFun(over_all_review).replace(",", "")
+            )
+            image_urls_list.append(imageFun(image).replace(",", ""))
+            free_delivery_list.append(
+                costModelNameReviewFreeDeliveryFun(free_delivery).replace(",", "")
+            )
+            model_details_list.append(over_all_product_details.replace(",", ""))
             time.sleep(wait)
 
         final_dict = {

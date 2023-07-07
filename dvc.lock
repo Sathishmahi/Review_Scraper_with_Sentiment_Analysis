@@ -71,6 +71,6 @@ stages:
       nfiles: 8
     outs:
     - path: artifact/prediction
-      md5: 708baf455e9c061dc9e61cb1178abbfc.dir
-      size: 49
+      md5: 470ccc2728903797b0b3030d9e07fb6e.dir
+      size: 63
       nfiles: 1

@@ -28,9 +28,9 @@ EXTRACT_PRODUCT_COLUMNS_NAME = [
 SPLIT_REVIES_COLUMNS_NAME = ["battery", "display", "overall", "camera"]
 CAMERA_LABELS, DISPLAY_LABELS, BATTERY_LABELS, OVERALL_LABELS = (
     ["good camera", "bad camera"],
-    ["good dispaly", "bad diaplay"],
+    ["good display", "bad display"],
     ["good battery", "bad battery"],
-    ["good", "bad"],
+    [" good", " bad"],
 )
 
 

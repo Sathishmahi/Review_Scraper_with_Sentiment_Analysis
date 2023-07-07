@@ -15,8 +15,11 @@ import sys
 from src.ReviewScraperwithSentimentAnalysis import logging
 
 product_name = st.text_input(label=" enter the product name ")
+st.markdown("\n")
 logging.info(msg=f"product name === {product_name}")
 is_click = st.button(label="Predict", key="key_1")
+st.markdown("\n")
+
 c = Configuration()
 prediction_csv_file_path = Path(c.get_prediciton_config().prediction_csv_file_path)
 extract_product_csv_file_path = Path(
@@ -66,6 +69,8 @@ if is_click:
     df = pd.read_csv(prediction_csv_file_path)
     df = df.drop_duplicates().to_markdown()
     # print(df)
+    st.write("Product Sentiments")
+    st.markdown("\n")
     st.markdown(df)
     st.markdown("\n\n")
     st.write(f"{product_name} varients details")
