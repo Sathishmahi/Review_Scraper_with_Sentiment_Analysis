@@ -166,6 +166,7 @@ cython_debug/
 *.pb
 model_path
 hugging_face_model
+pretrained_model
 *.jpg
 *.pkl
 artifact/
@@ -173,3 +174,4 @@ temp/
 
 node_modules
 package*.json
+large.csv

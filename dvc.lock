@@ -37,8 +37,8 @@ stages:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
     deps:
     - path: artifact/data_ingestion/review.csv
-      md5: c92c699318df809baba19c0ce6ed8646
-      size: 3405
+      md5: fa605072a71bf9dcb1c3f389f93e1cbc
+      size: 2960
     - path: src/ReviewScraperwithSentimentAnalysis/components/reviews_split.py
       md5: f24b5960e1fb4a71b1383cc8a40d2c49
       size: 7246
@@ -48,8 +48,8 @@ stages:
       nfiles: 8
     outs:
     - path: artifact/review_split
-      md5: 3001ff87bac9dd7fe1366d5b40ae3472.dir
-      size: 5796
+      md5: 4eea5910740c55710a84eba7ceb2fb58.dir
+      size: 6066
       nfiles: 4
   prediction:
     cmd: python src/ReviewScraperwithSentimentAnalysis/components/prediction.py

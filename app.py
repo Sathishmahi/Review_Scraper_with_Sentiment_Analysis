@@ -7,6 +7,7 @@ from src.ReviewScraperwithSentimentAnalysis.components.hugging_face_pretrained i
 from src.ReviewScraperwithSentimentAnalysis.config.configuration import Configuration
 from src.ReviewScraperwithSentimentAnalysis.constant import EXTRACT_PRODUCT_COLUMNS_NAME
 import streamlit as st
+from pathlib import Path
 import subprocess
 import pandas as pd
 import os
@@ -16,18 +17,24 @@ from src.ReviewScraperwithSentimentAnalysis import logging
 product_name = st.text_input(label=" enter the product name ")
 logging.info(msg=f"product name === {product_name}")
 is_click = st.button(label="Predict", key="key_1")
-prediction_csv_file_path = (
-    Configuration().get_prediciton_config().prediction_csv_file_path
+c = Configuration()
+prediction_csv_file_path = Path(c.get_prediciton_config().prediction_csv_file_path)
+extract_product_csv_file_path = Path(
+    c.get_data_ingestion_config().extract_product_csv_file_name
 )
-extract_product_csv_file_path = data_ingestion_config = (
-    Configuration().get_data_ingestion_config().extract_product_csv_file_name
-)
-review_csv_file_path = data_ingestion_config = (
-    Configuration().get_data_ingestion_config().review_file_path
-)
+review_csv_file_path = Path(c.get_data_ingestion_config().review_file_path)
 pretrain = PreTrained()
 
 read_csv_encode = lambda fp: pd.read_csv(fp)
+
+
+@st.cache_data
+def convert_df(fp: Path):
+    if not os.path.exists(fp):
+        raise FileNotFoundError(f" csv file not found {fp}")
+    df = pd.read_csv(fp)
+    return df.to_csv(index=False).encode("utf-8")
+
 
 if is_click:
     try:
@@ -60,37 +67,20 @@ if is_click:
     df = df.drop_duplicates().to_markdown()
     # print(df)
     st.markdown(df)
+    st.markdown("\n\n")
     st.write(f"{product_name} varients details")
     df_extract = pd.read_csv(extract_product_csv_file_path)
     df_extract = df_extract.drop_duplicates()
-    df_extract[EXTRACT_PRODUCT_COLUMNS_NAME[0]] = df_extract[
-        EXTRACT_PRODUCT_COLUMNS_NAME[0]
-    ].apply(lambda url: f'<a href="{url}" target="_blank">{url}</a>')
-    df_extract = df_extract.to_markdown()
-    st.markdown(df_extract, unsafe_allow_html=True)
+    st.dataframe(df_extract)
 
-    df_pre = read_csv_encode(prediction_csv_file_path)
+    st.markdown("\n\n")
+    review_csv = convert_df(review_csv_file_path)
     st.download_button(
-        label="Download Prediction CSV File",
-        data=df_pre,
-        file_name=f"{os.path.splitext(prediction_csv_file_path)[0]}.csv",
-        mime="text/csv",
-    )
-
-    df_rev = read_csv_encode(review_csv_file_path)
-    st.download_button(
-        label="Download Reviews CSV File",
-        data=df_rev,
-        file_name=f"{os.path.splitext(review_csv_file_path)[0]}.csv",
-        mime="text/csv",
-    )
-
-    df_extr = read_csv_encode(extract_product_csv_file_path)
-    st.download_button(
-        label="Download Product Varients Details CSV File",
-        data=df_extr,
-        file_name=f"{os.path.splitext(extract_product_csv_file_path)[0]}.csv",
-        mime="text/csv",
+        "Download Product Reviews CSV",
+        review_csv,
+        "reviews.csv",
+        "text/csv",
+        key="download-csv-reviews",
     )
 
     logging.info(msg=f"\n\n ALL PIPELINE RUN SUCESSFULLY ")
