@@ -13,11 +13,11 @@ all_expected_out = [
     PredictionConfig(
         root_dir="artifact/prediction",
         splited_reviews_dir_path="artifact/review_split/split_review_dir",
-        pretrain_model_path="artifact/pretrained_model/hugging_face_model",
+        pretrain_model_path="pretrained_model/hugging_face_model",
         prediction_csv_file_path="artifact/prediction/prediction.csv",
     ),
     PretrainedModelConfig(
-        pretrained_model_dir="artifact/pretrained_model/hugging_face_model",
+        pretrained_model_dir="pretrained_model/hugging_face_model",
         pretrained_model_name="roberta-large-mnli",
     ),
     ReviewSplitConfig(
@@ -51,6 +51,7 @@ all_expected_out = [
         output_columns_name="label",
     ),
 ]
+
 
 all_expected_dtypes = [
     DataIngestionConfig,

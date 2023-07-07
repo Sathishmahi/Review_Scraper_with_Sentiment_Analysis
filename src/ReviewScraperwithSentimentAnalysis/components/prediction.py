@@ -162,7 +162,7 @@ class Prediction:
                 if len(candidate_labels[0].split(" ")) > 1:
                     category = candidate_labels[0].split(" ")[1]
                     final_dict.update(
-                        {f"{category}": FINAL_LABEL_TO_VALUE_DICT.get(out_final)}
+                        {f"{category}": [FINAL_LABEL_TO_VALUE_DICT.get(out_final)]}
                     )
             return final_dict
         except Exception as e:

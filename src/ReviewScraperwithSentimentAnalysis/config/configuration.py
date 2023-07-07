@@ -186,11 +186,10 @@ class Configuration:
         pretrained_config = self.config_content.get(
             PretrainedModelConstant.PRETRAINED_ROOT_KEY
         )
-        print(pretrained_config)
         root_dir = pretrained_config.get(
             PretrainedModelConstant.PRETRAINED_ROOT_DIR_KEY
         )
-        root_dir_path = os.path.join(self.artifact_dir_name, root_dir)
+        root_dir_path = root_dir
 
         pretrained_model_dir = os.path.join(
             root_dir_path,

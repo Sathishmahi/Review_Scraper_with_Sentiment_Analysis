@@ -1,5 +1,3 @@
-/data_ingestion
+/review_split
 /text_preprocessing
 /prediction
-/review_split
-/pretrained_model

@@ -1,6 +1,9 @@
 from src.ReviewScraperwithSentimentAnalysis.components.data_ingestion_single import (
     toExtractReviewsSingle,
 )
+from src.ReviewScraperwithSentimentAnalysis.components.hugging_face_pretrained import (
+    PreTrained,
+)
 from src.ReviewScraperwithSentimentAnalysis.config.configuration import Configuration
 from src.ReviewScraperwithSentimentAnalysis.constant import EXTRACT_PRODUCT_COLUMNS_NAME
 import streamlit as st
@@ -22,6 +25,7 @@ extract_product_csv_file_path = data_ingestion_config = (
 review_csv_file_path = data_ingestion_config = (
     Configuration().get_data_ingestion_config().review_file_path
 )
+pretrain = PreTrained()
 
 read_csv_encode = lambda fp: pd.read_csv(fp)
 
@@ -29,6 +33,7 @@ if is_click:
     try:
         # print("inside the btn")
         toExtractReviewsSingle(searchString=product_name)
+        pretrain.combine_all()
         # print("succesfully review extract")
     except Exception as e:
         st.write(f" somthing went wrong please check product name right or wrong ! ")
@@ -38,7 +43,7 @@ if is_click:
     # product_name.
     command = "dvc repro"
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
-    print(result.returncode)
+    print(result.stderr)
     if result.returncode:
         st.write(f"somthing went wrong")
         logging.exception(msg=f"somthing wrong result returncode {result.returncode}")
