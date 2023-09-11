@@ -51,11 +51,7 @@ bash run.sh
 ![Review Scraper with Sentiment Analysis_1](https://github.com/Sathishmahi/Review_Scraper_with_Sentiment_Analysis/assets/88724458/6cd4cc70-2dfe-423c-85b2-7b80d4aaa217)
 
 
-
-
-
 ## Demo Video
 
 https://github.com/Sathishmahi/Review_Scraper_with_Sentiment_Analysis/assets/88724458/79c2112e-943f-4cb3-9232-f1518c64815c
-
 
